@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bridgeland Science Olympiad: State Readiness</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<style>
+:root{--color-fg:#1f1e1d;--color-fg-muted:#6b6862;--color-bg:#f6f4ee;--color-panel:#ffffff;--color-border-line:#e4e0d6;--color-ok:#2e8b57;--color-warn:#c27c0e;--color-bad:#c4453c;
+--font-anthropic-sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--font-anthropic-serif:Georgia,"Times New Roman",serif;
+--cds-font-size-caption:12px;--cds-font-size-body:14px;--cds-font-size-heading:16px;--cds-font-size-title:22px;--cds-font-weight-medium:600;
+--cds-gap-xs:4px;--cds-gap-sm:8px;--cds-gap-md:14px;--cds-gap-lg:20px;--cds-gap-xl:28px;--cds-pad-sm:8px;--cds-pad-md:12px;--cds-pad-lg:18px;--cds-pad-xl:28px;--cds-radius:12px;
+--cds-surface-popover:#ffffff;--cds-border:#e4e0d6;--cds-shadow-popover:0 6px 24px rgba(0,0,0,.12);--cds-text-secondary:#6b6862;--cds-chart-grid:#ece9e1;--cds-chart-axis:#d6d2c8;--cds-chart-muted:#b8b4aa;
+--cds-dur-slow:.45s;--cds-ease-out:cubic-bezier(.2,.8,.2,1);--so-build-c:#d97757;--so-lab-c:#3f7fbf;--so-study-c:#4f9a6a}
+@media (prefers-color-scheme:dark){:root{--color-fg:#ecebe6;--color-fg-muted:#a09d95;--color-bg:#1a1a19;--color-panel:#242422;--color-border-line:#36352f;--color-ok:#5cc28a;--color-warn:#e0a63a;--color-bad:#ec6d63;--cds-surface-popover:#2c2c29;--cds-border:#3d3c36;--cds-text-secondary:#a09d95;--cds-chart-grid:#33322d;--cds-chart-axis:#45443e;--cds-chart-muted:#6d6a62;--so-build-c:#e58b6b;--so-lab-c:#6aa3dc;--so-study-c:#6fbb8a}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--color-bg);color:var(--color-fg);font-family:var(--font-anthropic-sans);font-size:14px;line-height:1.5}
+[hidden]{display:none !important}
+.wrap{max-width:1240px;margin:0 auto;padding:20px 20px 48px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600}
+.brand i{width:12px;height:12px;border-radius:3px;background:linear-gradient(135deg,var(--so-build-c),var(--so-lab-c),var(--so-study-c))}
+.tools{display:flex;align-items:center;gap:10px;color:var(--color-fg-muted);font-size:13px}
+.btn{font:inherit;font-size:13px;border:1px solid var(--color-border-line);background:var(--color-panel);color:var(--color-fg);padding:6px 12px;border-radius:999px;cursor:pointer}
+.btn:hover{border-color:var(--color-fg-muted)}
+.banner{background:color-mix(in srgb,var(--color-warn) 16%,var(--color-panel));border:1px solid color-mix(in srgb,var(--color-warn) 45%,transparent);color:var(--color-fg);border-radius:10px;padding:10px 14px;margin-bottom:16px}
+.dash-select{font:inherit;font-size:13px;color:var(--color-fg);background-color:var(--color-panel);border:1px solid var(--color-border-line);border-radius:8px;padding:5px 8px}
+.dash-skeleton{color:transparent !important;background:linear-gradient(90deg,var(--color-border-line),color-mix(in srgb,var(--color-border-line) 40%,transparent),var(--color-border-line));background-size:200% 100%;border-radius:6px;animation:skel 1.2s linear infinite;display:inline-block;min-width:2.5ch;min-height:1em}
+@keyframes skel{to{background-position:-200% 0}}
+.gate{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(1200px 600px at 10% -10%,color-mix(in srgb,var(--so-build-c) 18%,transparent),transparent),radial-gradient(900px 500px at 110% 110%,color-mix(in srgb,var(--so-lab-c) 18%,transparent),transparent),var(--color-bg)}
+.gate-card{width:min(100%,400px);background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:18px;padding:32px 28px;box-shadow:0 20px 60px rgba(0,0,0,.08);position:relative;overflow:hidden}
+.gate-card:before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--so-build-c),var(--so-lab-c),var(--so-study-c))}
+.gate-kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted);font-weight:600}
+.gate h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:30px;line-height:1.15;margin:8px 0 6px}
+.gate p{margin:0 0 20px;color:var(--color-fg-muted)}
+.gate label{display:block;font-size:13px;font-weight:600;margin:12px 0 6px}
+.gate input{width:100%;font:inherit;font-size:15px;padding:10px 12px;border-radius:10px;border:1px solid var(--color-border-line);background:var(--color-bg);color:var(--color-fg)}
+.gate input:focus{outline:2px solid color-mix(in srgb,var(--so-lab-c) 60%,transparent);outline-offset:1px}
+.gate button{margin-top:20px;width:100%;font:inherit;font-size:15px;font-weight:600;padding:11px;border:0;border-radius:10px;background:var(--color-fg);color:var(--color-bg);cursor:pointer}
+.gate .gate-err{color:var(--color-bad);font-size:13px;margin:12px 0 0}
+
+
+.so{--so-build:var(--so-c0);--so-lab:var(--so-c1);--so-study:var(--so-c2);font-family:var(--font-anthropic-sans);color:var(--color-fg);display:flex;flex-direction:column;gap:var(--cds-gap-xl)}
+.so *{box-sizing:border-box}
+.so-hero{position:relative;overflow:hidden;border-radius:calc(var(--cds-radius)*2);padding:var(--cds-pad-xl);background:var(--color-panel);border:1px solid var(--color-border-line)}
+.so-hero:before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--so-build),var(--so-lab),var(--so-study))}
+.so-kicker{font-size:var(--cds-font-size-caption);letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted);font-weight:var(--cds-font-weight-medium)}
+.so-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:clamp(28px,4vw,40px);line-height:1.1;margin:var(--cds-gap-sm) 0 var(--cds-gap-md)}
+.so-take{font-size:var(--cds-font-size-body);line-height:1.6;max-width:60em;margin:0;color:var(--color-fg)}
+.so-take b{font-weight:var(--cds-font-weight-medium)}
+.so-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--cds-gap-md)}
+.so-kpi{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);position:relative;overflow:hidden}
+.so-kpi .so-kpi-label{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.so-kpi .so-kpi-num{font-family:var(--font-anthropic-serif);font-size:34px;line-height:1.15;margin-top:var(--cds-gap-xs);font-variant-numeric:tabular-nums;min-height:40px;min-width:2ch}
+.so-kpi .so-kpi-sub{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-top:2px}
+.so-kpi.k-ready{border-top:3px solid var(--color-ok)}.so-kpi.k-close{border-top:3px solid var(--color-warn)}.so-kpi.k-not{border-top:3px solid var(--color-bad)}
+.so-sec{display:flex;flex-direction:column;gap:var(--cds-gap-md)}
+.so-h2{font-size:var(--cds-font-size-title);font-weight:var(--cds-font-weight-medium);margin:0}
+.so-lede{margin:0;color:var(--color-fg-muted);font-size:var(--cds-font-size-body)}
+.so-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);min-width:0}
+.so-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:var(--cds-gap-md)}
+.so-h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-sm)}
+.so-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-bottom:var(--cds-gap-sm)}
+.so-legend span{display:inline-flex;align-items:center;gap:6px}
+.so-sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+.so-chart{position:relative;min-height:240px;width:100%}
+.so-tip{position:absolute;pointer-events:none;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:var(--cds-radius);padding:6px 10px;font-size:var(--cds-font-size-caption);color:var(--color-fg);white-space:nowrap;opacity:0;transition:opacity .12s;z-index:5}
+.so-chart text{font-family:var(--font-anthropic-sans)}
+.so-axis text{fill:var(--cds-text-secondary);font-size:11px}
+.so-axis path,.so-axis line{stroke:var(--cds-chart-axis)}
+.so-tablewrap{overflow-x:auto}
+.so-table{width:100%;border-collapse:collapse;font-size:var(--cds-font-size-body);font-variant-numeric:tabular-nums}
+.so-table th{text-align:left;font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);padding:8px 10px;border-bottom:1px solid var(--color-border-line);white-space:nowrap}
+.so-table td{padding:8px 10px;border-bottom:1px solid var(--color-border-line);vertical-align:middle}
+.so-table tr:last-child td{border-bottom:0}
+.so-table td.n,.so-table th.n{text-align:right}
+.so-table tbody tr.so-click{cursor:pointer}
+.so-table tbody tr.so-click:hover td{background:color-mix(in srgb,var(--color-fg) 5%,transparent)}
+.so-table tbody tr.is-sel td{background:color-mix(in srgb,var(--so-lab) 14%,transparent)}
+.so-pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium);white-space:nowrap}
+.so-pill.r-Ready{background:color-mix(in srgb,var(--color-ok) 20%,transparent);color:var(--color-ok)}
+.so-pill.r-Close{background:color-mix(in srgb,var(--color-warn) 22%,transparent);color:var(--color-warn)}
+.so-pill.r-Not{background:color-mix(in srgb,var(--color-bad) 18%,transparent);color:var(--color-bad)}
+.so-pill.r-none{background:color-mix(in srgb,var(--color-fg) 8%,transparent);color:var(--color-fg-muted)}
+.so-type{display:inline-flex;align-items:center;gap:6px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.so-type i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.so-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:var(--cds-gap-md)}
+.so-col{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md);display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-height:140px}
+.so-colhead{display:flex;align-items:baseline;justify-content:space-between;padding:4px 4px 8px;border-bottom:1px solid var(--color-border-line)}
+.so-colhead strong{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium)}
+.so-colcount{font-family:var(--font-anthropic-serif);font-size:26px;font-variant-numeric:tabular-nums;min-width:1.5ch;min-height:30px}
+.so-col.c-Ready .so-colhead strong{color:var(--color-ok)}.so-col.c-Close .so-colhead strong{color:var(--color-warn)}.so-col.c-Not .so-colhead strong{color:var(--color-bad)}
+.so-chips{display:flex;flex-direction:column;gap:6px;min-height:40px}
+.so-chip{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:calc(var(--cds-radius) - 2px);background:var(--color-bg);border:1px solid var(--color-border-line);border-left-width:4px;cursor:pointer;font-size:var(--cds-font-size-body);text-align:left;color:var(--color-fg);width:100%;font-family:inherit}
+.so-chip:hover{border-color:var(--color-fg-muted)}
+.so-chip small{color:var(--color-fg-muted);font-variant-numeric:tabular-nums;text-align:right;line-height:1.35}
+.so-bar{display:flex;flex-wrap:wrap;align-items:center;gap:var(--cds-gap-sm);justify-content:space-between}
+.so-tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--color-panel);border:1px solid var(--color-border-line);flex-wrap:wrap}
+.so-tab{border:0;background:transparent;color:var(--color-fg-muted);font:inherit;font-size:var(--cds-font-size-body);padding:6px 14px;border-radius:999px;cursor:pointer}
+.so-tab.is-on{background:var(--color-fg);color:var(--color-bg)}
+.so-ctrls{display:flex;gap:var(--cds-gap-md);align-items:center;flex-wrap:wrap;font-size:var(--cds-font-size-body);color:var(--color-fg-muted)}
+.so-ctrls label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.so-heat{border-collapse:separate;border-spacing:4px;font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums;width:100%}
+.so-heat th{font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);text-align:center;padding:2px 4px;vertical-align:bottom}
+.so-heat th.ev{text-align:left}
+.so-heat th small{display:block;font-weight:400}
+.so-heat td{text-align:center;border-radius:6px;padding:7px 4px;min-width:58px;font-size:var(--cds-font-size-body)}
+.so-heat td.ev{text-align:left;background:transparent;padding-left:0;white-space:nowrap;font-size:var(--cds-font-size-body)}
+.so-heat td.h-medal{background:color-mix(in srgb,var(--color-ok) 30%,transparent);color:var(--color-fg);font-weight:var(--cds-font-weight-medium)}
+.so-heat td.h-gold{background:var(--color-ok);color:var(--color-bg);font-weight:var(--cds-font-weight-medium)}
+.so-heat td.h-rank{background:color-mix(in srgb,var(--color-fg) 7%,transparent)}
+.so-heat td.h-p{background:color-mix(in srgb,var(--color-warn) 18%,transparent);color:var(--color-warn)}
+.so-heat td.h-none{color:var(--color-fg-muted)}
+.so-detail-head{display:flex;flex-wrap:wrap;align-items:center;gap:var(--cds-gap-sm) var(--cds-gap-md)}
+.so-detail-name{font-family:var(--font-anthropic-serif);font-size:26px;font-weight:400}
+.so-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:var(--cds-gap-sm);margin:var(--cds-gap-md) 0}
+.so-stat{background:var(--color-bg);border:1px solid var(--color-border-line);border-radius:calc(var(--cds-radius) - 2px);padding:8px 10px}
+.so-stat span{display:block;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.so-stat b{font-family:var(--font-anthropic-serif);font-weight:400;font-size:22px;font-variant-numeric:tabular-nums}
+.so-hint{color:var(--color-fg-muted);margin:0}
+.so-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.so-list li{display:flex;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:6px;background:var(--color-bg);border:1px solid var(--color-border-line);font-size:var(--cds-font-size-body)}
+.so-list li small{color:var(--color-fg-muted);white-space:nowrap}
+.so-foot{font-size:var(--cds-font-size-body);color:var(--color-fg-muted)}
+.so-foot summary{cursor:pointer;color:var(--color-fg)}
+.so-foot ul{margin:var(--cds-gap-sm) 0 0;padding-left:1.2em;line-height:1.7}
+.so-dot{transition:r .15s}
+.so-sumgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:var(--cds-gap-md);align-items:start}
+.so-sumhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:1px solid var(--color-border-line);padding-bottom:8px;margin-bottom:8px}
+.so-sumhead .so-h3{margin:0;display:flex;align-items:center;gap:8px}
+.so-sumdot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.so-sumcount{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);white-space:nowrap}
+.so-sumlist{display:flex;flex-direction:column;min-height:60px}
+.so-sumitem{padding:10px 2px;border-bottom:1px solid var(--color-border-line);cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.so-sumitem:last-child{border-bottom:0}
+.so-sumitem:hover .so-sumname{text-decoration:underline}
+.so-sumtop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.so-sumname{font-weight:var(--cds-font-weight-medium)}
+.so-summeta{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);font-variant-numeric:tabular-nums}
+.so-sumppl{font-size:var(--cds-font-size-caption);color:var(--color-fg)}
+.so-sumppl.is-empty{color:var(--color-fg-muted);font-style:italic}
+.so-sumnext{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+@media (prefers-reduced-motion:no-preference){.so-grow{animation:soIn var(--cds-dur-slow) var(--cds-ease-out) both}@keyframes soIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}}
+@media print{.so-tabs,.so-ctrls{display:none}}
+
+</style>
+</head>
+<body>
+<div id="gate" class="gate" hidden>
+  <form id="loginForm" class="gate-card" autocomplete="on" onsubmit="return false">
+    <div class="gate-kicker">Bridgeland High School Science Olympiad</div>
+    <h1>State readiness dashboard</h1>
+    <p>Sign in to view the 2026-27 team dashboard.</p>
+    <label for="user">Username</label>
+    <input id="user" name="user" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <label for="pass">Password</label>
+    <input id="pass" name="pass" type="password" autocomplete="current-password">
+    <button type="button" id="signInBtn">Sign in</button>
+    <p class="gate-err" id="loginError" role="alert" hidden>That username and password don't match. Try again.</p>
+  </form>
+</div>
+<div id="app" hidden>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand"><i></i>Bridgeland Science Olympiad</div>
+      <div class="tools"><span id="loadedAt"></span><button class="btn" id="refreshBtn" type="button">Refresh data</button><button class="btn" id="logoutBtn" type="button">Log out</button></div>
+    </div>
+    <div class="banner" id="dataBanner" role="status" hidden></div>
+<div class="so">
+  <header class="so-hero so-grow" id="overview">
+    <div class="so-kicker">Bridgeland High School Science Olympiad · Division C · 2026-27 season</div>
+    <h1 class="so-title">State readiness dashboard</h1>
+    <p class="so-take" data-read lang="en"><b data-draw="takeReady" class="dash-skeleton" data-source="readiness" data-field="events" data-where="scope=National&amp;readiness=Ready"></b> of <b data-draw="takeTotal" class="dash-skeleton" data-source="readiness" data-field="events" data-where="scope=National&amp;readiness=Total"></b> national events are state-ready based on our best team's in-person results. <b data-draw="takeCat">—</b> is our strongest category, with a best-team medal rate of <b data-draw="takeCatRate" class="dash-skeleton" data-source="categories" data-field="Best team medal rate"></b>. <b data-draw="takeSat" class="dash-skeleton" data-source="readiness" data-field="events" data-where="scope=National&amp;readiness=Satellite only"></b> events medal at satellites but not yet in person.</p>
+  </header>
+
+  <div class="so-kpis" id="kpis">
+    <div class="so-kpi k-ready" id="kpi-ready"><div class="so-kpi-label">Ready for state</div><div class="so-kpi-num dash-skeleton" data-draw="kpiCount" data-k="Ready" data-source="readiness" data-field="events" data-where="scope=National&amp;readiness=Ready" data-fetchpriority="high"></div><div class="so-kpi-sub">national events</div></div>
+    <div class="so-kpi k-close" id="kpi-close"><div class="so-kpi-label">Close</div><div class="so-kpi-num dash-skeleton" data-draw="kpiCount" data-k="Close" data-source="readiness" data-field="events" data-where="scope=National&amp;readiness=Close"></div><div class="so-kpi-sub">national events</div></div>
+    <div class="so-kpi k-not" id="kpi-not"><div class="so-kpi-label">Not yet</div><div class="so-kpi-num dash-skeleton" data-draw="kpiCount" data-k="Not yet" data-source="readiness" data-field="events" data-where="scope=National&amp;readiness=Not yet"></div><div class="so-kpi-sub">national events</div></div>
+    <div class="so-kpi" id="kpi-medals"><div class="so-kpi-label">Medals won</div><div class="so-kpi-num dash-skeleton" data-draw="kpiCat" data-f="Medals (all teams)" data-source="categories" data-field="Medals (all teams)" data-where="Category=All events"></div><div class="so-kpi-sub">all teams, all invitationals</div></div>
+    <div class="so-kpi" id="kpi-firsts"><div class="so-kpi-label">1st places</div><div class="so-kpi-num dash-skeleton" data-draw="kpiCat" data-f="1st places (all teams)" data-source="categories" data-field="1st places (all teams)" data-where="Category=All events"></div><div class="so-kpi-sub">all teams</div></div>
+    <div class="so-kpi" id="kpi-results"><div class="so-kpi-label">Results logged</div><div class="so-kpi-num dash-skeleton" data-draw="kpiCat" data-f="Results (all teams)" data-source="categories" data-field="Results (all teams)" data-where="Category=All events"></div><div class="so-kpi-sub">ranked placements</div></div>
+  </div>
+
+  <section class="so-sec so-grow" id="categories">
+    <h2 class="so-h2">Study vs Lab vs Build</h2>
+    <p class="so-lede">Best-team medal rate by category: how often our top placement in an event medals, at in-person and satellite invitationals.</p>
+    <div class="so-grid2">
+      <div class="so-card" id="cat-chart-card">
+        <h3 class="so-h3">Best-team medal rate</h3>
+        <div class="so-legend"><span><i class="so-sw" data-draw="swIP"></i>In-person (solid)</span><span><i class="so-sw" data-draw="swSat"></i>Satellite (light)</span></div>
+        <div class="so-chart" data-draw="catChart" data-source="categories"></div>
+      </div>
+      <div class="so-card" id="cat-table-card">
+        <h3 class="so-h3">Category scorecard</h3>
+        <div class="so-tablewrap">
+          <table class="so-table" data-source="categories" data-row-key="Category">
+            <thead><tr><th data-field="Category">Category</th><th class="n" data-field="Events">Events</th><th class="n" data-field="Medals (all teams)">Medals</th><th class="n" data-field="1st places (all teams)">1st places</th><th class="n" data-field="Best team medal rate">Best-team medal rate</th><th class="n" data-field="Avg in-person place (best team)">Avg in-person place</th></tr></thead>
+            <tbody data-draw="catRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="so-sec so-grow" id="summaries">
+    <h2 class="so-h2">Build, Lab and Study summaries</h2>
+    <p class="so-lede">From the Build, Lab and Study Summary tabs of the tracker. Competitors and next steps come from the captain's columns; fill them in on the sheet and they appear here. Follows the National events only toggle on the Readiness board below.</p>
+    <div class="so-sumgrid">
+      <div class="so-card so-sumcard" id="sum-build"><div class="so-sumhead"><h3 class="so-h3"><i class="so-sumdot" data-draw="sumDot" data-cat="Build"></i>Build summary</h3><span class="so-sumcount" data-draw="sumCount" data-cat="Build"></span></div><div class="so-sumlist" data-draw="catSummary" data-cat="Build" data-source="summary ipMedals"></div></div>
+      <div class="so-card so-sumcard" id="sum-lab"><div class="so-sumhead"><h3 class="so-h3"><i class="so-sumdot" data-draw="sumDot" data-cat="Lab"></i>Lab summary</h3><span class="so-sumcount" data-draw="sumCount" data-cat="Lab"></span></div><div class="so-sumlist" data-draw="catSummary" data-cat="Lab" data-source="summary ipMedals"></div></div>
+      <div class="so-card so-sumcard" id="sum-study"><div class="so-sumhead"><h3 class="so-h3"><i class="so-sumdot" data-draw="sumDot" data-cat="Study"></i>Study summary</h3><span class="so-sumcount" data-draw="sumCount" data-cat="Study"></span></div><div class="so-sumlist" data-draw="catSummary" data-cat="Study" data-source="summary ipMedals"></div></div>
+    </div>
+  </section>
+
+  <section class="so-sec so-grow" id="board">
+    <div class="so-bar">
+      <div>
+        <h2 class="so-h2">Readiness board</h2>
+        <p class="so-lede">Ready: best team medals at <b data-draw="thr" data-i="0" data-source="thresholds" data-field="Value" data-row="0">—</b> or more of in-person invitationals and averages <b data-draw="thr" data-i="1" data-source="thresholds" data-field="Value" data-row="1">—</b> or better. Close: <b data-draw="thr" data-i="2" data-source="thresholds" data-field="Value" data-row="2">—</b> or more and <b data-draw="thr" data-i="3" data-source="thresholds" data-field="Value" data-row="3">—</b> or better.</p>
+      </div>
+      <div class="so-ctrls"><label><input type="checkbox" class="so-national" checked> National events only</label></div>
+    </div>
+    <div class="so-board">
+      <div class="so-col c-Ready" id="board-ready"><div class="so-colhead"><strong>Ready</strong><span class="so-colcount" data-draw="boardCount" data-col="Ready" data-source="readiness" data-field="events"></span></div><div class="so-chips" data-draw="board" data-col="Ready" data-source="summary ipMedals"></div></div>
+      <div class="so-col c-Close" id="board-close"><div class="so-colhead"><strong>Close</strong><span class="so-colcount" data-draw="boardCount" data-col="Close" data-source="readiness" data-field="events"></span></div><div class="so-chips" data-draw="board" data-col="Close" data-source="summary ipMedals"></div></div>
+      <div class="so-col c-Not" id="board-not"><div class="so-colhead"><strong>Not yet</strong><span class="so-colcount" data-draw="boardCount" data-col="Not yet" data-source="readiness" data-field="events"></span></div><div class="so-chips" data-draw="board" data-col="Not yet" data-source="summary ipMedals"></div></div>
+    </div>
+  </section>
+
+  <section class="so-sec so-grow" id="explorer">
+    <h2 class="so-h2">Event explorer</h2>
+    <div class="so-bar">
+      <div class="so-tabs" role="tablist" aria-label="Category">
+        <button class="so-tab is-on" data-cat="All" role="tab" aria-selected="true">All</button>
+        <button class="so-tab" data-cat="Build" role="tab" aria-selected="false">Build</button>
+        <button class="so-tab" data-cat="Lab" role="tab" aria-selected="false">Lab</button>
+        <button class="so-tab" data-cat="Study" role="tab" aria-selected="false">Study</button>
+      </div>
+      <div class="so-ctrls">
+        <label>Sort by <select class="dash-select so-sort" aria-label="Sort events"><option value="readiness">Readiness</option><option value="place">Avg in-person place</option><option value="rate">In-person medal rate</option><option value="name">Name</option></select></label>
+      </div>
+    </div>
+
+    <div class="so-grid2">
+      <div class="so-card" id="place-card">
+        <h3 class="so-h3">Best team's average in-person place</h3>
+        <div class="so-legend"><span><i class="so-sw" data-draw="swReady"></i>Ready</span><span><i class="so-sw" data-draw="swClose"></i>Close</span><span><i class="so-sw" data-draw="swNot"></i>Not yet</span><span>Dashed lines: Ready and Close place cutoffs</span></div>
+        <div class="so-chart" data-draw="placeChart" data-source="summary thresholds"></div>
+      </div>
+      <div class="so-card" id="heat-card">
+        <h3 class="so-h3">Best Bridgeland place at each invitational</h3>
+        <div class="so-legend"><span><i class="so-sw" data-draw="swGold"></i>1st place</span><span><i class="so-sw" data-draw="swMedal"></i>Medal</span><span><i class="so-sw" data-draw="swRank"></i>No medal</span><span><i class="so-sw" data-draw="swP"></i>Competed, no rank or no-show</span></div>
+        <div class="so-tablewrap" data-draw="heat" data-source="heat invitationals"></div>
+      </div>
+    </div>
+
+    <div class="so-card" id="event-table">
+      <h3 class="so-h3">All events (select one for details)</h3>
+      <div class="so-tablewrap">
+        <table class="so-table" data-source="summary" data-row-key="Event">
+          <thead><tr><th data-field="Event">Event</th><th data-field="Category">Type</th><th data-field="Readiness">Readiness</th><th class="n" data-field="Avg in-person place">Avg in-person place</th><th class="n" data-field="In-person medal rate">In-person medal rate</th><th class="n" data-field="Satellite medal rate">Satellite medal rate</th><th class="n" data-field="Invitationals medaled">Invitationals medaled</th><th data-field="Satellite vs in-person">Satellite vs in-person</th></tr></thead>
+          <tbody data-draw="evtBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="so-card" id="detail">
+      <div class="so-detail-head"><span class="so-detail-name" data-draw="detailName">—</span><span data-draw="detailPills"></span></div>
+      <p class="so-hint so-pick">Select an event on the board or in the table to see every team's result.</p><span data-draw="detailHint"></span>
+      <div class="so-stats" data-draw="detailStats" data-source="summary"></div>
+      <div class="so-tablewrap">
+        <table class="so-table" data-source="results" data-row-key="Invitational,Team name,Event">
+          <thead><tr><th data-field="Date">Date</th><th data-field="Invitational">Invitational</th><th data-field="Format">Format</th><th data-field="Team name">Team</th><th class="n" data-field="Placement">Place</th><th class="n" data-field="Teams in event">Teams</th><th data-field="Medaled?">Medal</th><th data-field="Penalty / issue">Note</th></tr></thead>
+          <tbody data-draw="detailRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="so-sec so-grow" id="satellite">
+    <h2 class="so-h2">Satellite vs in-person</h2>
+    <p class="so-lede">Where our best team medals in one format but not the other. In-person results matter most for state.</p>
+    <div class="so-grid2">
+      <div class="so-card" id="sat-only"><h3 class="so-h3">Medal at satellites only</h3><ul class="so-list" data-draw="satList" data-k="Satellite only" data-source="summary"></ul></div>
+      <div class="so-card" id="ip-only"><h3 class="so-h3">Medal in person only</h3><ul class="so-list" data-draw="satList" data-k="In-person only" data-source="summary"></ul></div>
+    </div>
+  </section>
+
+  <details class="so-foot" id="method">
+    <summary>How the numbers are calculated</summary>
+    <ul>
+      <li>Every number reads from the published Bridgeland Science Olympiad Build Tracker Google Sheet. Google refreshes published data about every 5 minutes, so edits show up here shortly after, or press Refresh data.</li>
+      <li>Best team: for each event at each invitational, only the best Bridgeland placement counts, since one team goes to state.</li>
+      <li>A medal means placing within that invitational's medal cutoff (set on the sheet's Lists tab).</li>
+      <li>Ready: in-person medal rate at least <b data-draw="thr" data-i="0" data-source="thresholds" data-field="Value" data-row="0">—</b> and average in-person place <b data-draw="thr" data-i="1" data-source="thresholds" data-field="Value" data-row="1">—</b> or better. Close: at least <b data-draw="thr" data-i="2" data-source="thresholds" data-field="Value" data-row="2">—</b> and <b data-draw="thr" data-i="3" data-source="thresholds" data-field="Value" data-row="3">—</b> or better. Otherwise Not yet.</li>
+      <li>Satellite results (online invitationals) are shown but do not count toward readiness.</li>
+      <li>Captain's call: when a captain picks Ready, Close or Not yet in the State ready? (captain) column of a Summary tab, that choice is used everywhere on this page in place of the calculated readiness, and is marked "captain".</li>
+    </ul>
+  </details>
+</div>
+  </div>
+</div>
+<script>
+const SNAPSHOT_DATE = 'Nov 25, 2026';
+const SNAPSHOT = {"12":[["Study vs lab vs build: how Bridgeland is doing"],["note"],["Category","Events","Results (all teams)","Medals (all teams)","Best team medal rate","1st places (all teams)","In-person: best team medal rate","Satellite: best team medal rate","Avg in-person place (best team)","Strong events","Needs work","Medal at satellites only"],["Study","20","128","24","51%","5","38%","67%","6.3","Astronomy, Codebusters, Remote Sensing, History of Science, Silicon Showdown, Pokémon Trivia","Botany, Designer Genes, Disease Detectives, Medicinal Chemistry, Mind Over Matter, Rocket Science, Fermish Questions, Sports Trivia","Designer Genes, Disease Detectives"],["Lab","9","90","15","36%","3","38%","39%","5.4","Experimental Design, Protein Modeling, Water Quality, Thermodynamics","Chemistry Lab, Circuit Lab, Engineering CAD, Forensics","Chemistry Lab, Circuit Lab, Forensics"],["Build","6","40","22","67%","6","58%","75%","4.0","Boomilever, Electric Vehicle, Hovercraft, Mission Possible, Ping Pong Parachute, Wright Stuff","None","None"],["All events","35","258","61","50%","14","42%","59%","5.6","Astronomy, Codebusters, Remote Sensing, Experimental Design, Protein Modeling, Water Quality, Boomilever, Electric Vehicle, Hovercraft, Mission Possible, Ping Pong Parachute, Thermodynamics, Wright Stuff, History of Science, Silicon Showdown, Pokémon Trivia","Botany, Designer Genes, Disease Detectives, Chemistry Lab, Circuit Lab, Engineering CAD, Forensics, Medicinal Chemistry, Mind Over Matter, Rocket Science, Fermish Questions, Sports Trivia","Designer Genes, Disease Detectives, Chemistry Lab, Circuit Lab, Forensics"]],"13":[["Event","Event type","National event?","Event types","","Invitational","Date","Format","Medal cutoff (top N)","Source","Team A name","Team names","","Format","","Tier","","Penalty / issue","","Yes / No","","Trend","","Reliability","","State ready?","","Readiness setting (best team, in-person)","Value"],["","","","","","Highlands Invitational","10/03/2026","Satellite","8","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/","Verity","","","","","","","","","","","","","","","","","Ready: medal rate at least","50%"],["","","","","","Rickards Invitational","10/31/2026","Satellite","20","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/","Naranja","","","","","","","","","","","","","","","","","Ready: avg place at most","6"],["","","","","","UT Austin Invitational","11/14/2026","In-person","3","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/","Orange","","","","","","","","","","","","","","","","","Close: medal rate at least","33%"],["","","","","","University of Houston Invitational","11/21/2026","In-person","4","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/","Team 1","","","","","","","","","","","","","","","","","Close: avg place at most","10"]],"14":[["t"],["n"],["Build event","Results","Best place","Latest place","Avg place (best team)","Avg in-person place (best team)","Avg satellite place (best team)","Medals (all teams)","Invitationals medaled (best team)","Medal rate (best team)","In-person: best team medal rate","Satellite: best team medal rate","Satellite vs in-person","Suggested readiness","State ready? (captain)","Trend","Reliability","Best competitor 1","Best competitor 2","Backup competitor","Next steps"],["Boomilever","9","1","1","4.5","3.5","5.5","4","2 of 4","50%","50%","50%","Both","Ready","Yes","Improving","Medium","Akash","Sohan","Joshua","Improve in person consistency"],["Electric Vehicle","7","1","1","6.0","6.0","6.0","4","3 of 4","75%","50%","100%","Both","Ready","Yes","Improving","High","Srikar","","","Keep fine tuning"],["Hovercraft","6","4","4","10.7","6.0","20.0","2","2 of 4","50%","50%","50%","Both","Close","Close","Improving","Low","Kartigan","","","Practice with track. "],["Mission Possible","4","2","2","9.7","5.0","19.0","3","2 of 4","50%","50%","50%","Both","Not Yet","Not yet","Flat","Low","Sohan","","","Significantly needs improvement"],["Ping Pong Parachute","7","1","1","4.0","2.5","5.5","4","3 of 4","75%","50%","100%","Both","Ready","Yes","Improving","High","Srikar","Akash","Sohan","Keep fine tuning"],["Wright Stuff","7","1","1","5.0","1.0","9.0","5","4 of 4","100%","100%","100%","Both","Ready","Yes","Flat","High","Girish","","","Keep fine tuning"]],"15":[["t"],["n"],["Lab event","Results","Best place","Latest place","Avg place (best team)","Avg in-person place (best team)","Avg satellite place (best team)","Medals (all teams)","Invitationals medaled (best team)","Medal rate (best team)","In-person: best team medal rate","Satellite: best team medal rate","Satellite vs in-person","Suggested readiness","State ready? (captain)","Trend","Best competitor 1","Best competitor 2","Best Competitor 3","Next steps"],["Chemistry Lab","12","2","8","31.5","7.0","56.0","1","1 of 4","25%","0%","50%","Satellite only","Not yet"],["Circuit Lab","12","5","9","21.3","7.0","35.5","1","1 of 4","25%","0%","50%","Satellite only","Not yet","","","Aarush"],["Engineering CAD","7","6","6","12.3","6.5","24.0","0","0 of 3","0%","0%","0%","Neither","Not yet","","","Aarush"],["Experimental Design","10","1","1","17.5","1.0","34.0","2","2 of 4","50%","100%","0%","In-person only","Ready","","","Srikar","Pranav","Girish"],["Forensics","12","5","5","21.8","7.0","36.5","1","1 of 4","25%","0%","50%","Satellite only","Not yet"],["Protein Modeling","12","2","3","2.5","3.0","2.0","5","4 of 4","100%","100%","100%","Both","Ready","","","Jayden"],["Water Quality","11","2","2","34.5","6.0","63.0","1","1 of 4","25%","50%","0%","In-person only","Ready","","","Guhan","Sidh"],["Thermodynamics","12","1","2","4.0","6.0","2.0","4","3 of 4","75%","50%","100%","Both","Ready","","","Srikar","Pranav"],["Materials Science","2","38","38","38.0","","38.0","0","0 of 1","0%","","0%","Not enough data"]],"16":[["t"],["n"],["Study event","Results","Best place","Latest place","Avg place (best team)","Avg in-person place (best team)","Avg satellite place (best team)","Medals (all teams)","Invitationals medaled (best team)","Medal rate (best team)","In-person: best team medal rate","Satellite: best team medal rate","Satellite vs in-person","Suggested readiness","State ready? (captain)","Trend","Best competitor 1","Best competitor 2","Best competitor 3","Next steps"],["Anatomy and Physiology","12","4","4","9.0","9.5","8.5","3","3 of 4","75%","50%","100%","Both","Close"],["Astronomy","11","3","3","37.8","4.0","71.5","1","1 of 4","25%","50%","0%","In-person only","Ready"],["Botany","10","5","5","37.0","7.5","66.5","0","0 of 4","0%","0%","0%","Neither","Not yet"],["Codebusters","11","2","2","9.0","2.5","15.5","3","3 of 4","75%","100%","50%","Both","Ready","","","Jayden","Joshua","Advaith Bade"],["Designer Genes","11","1","5","5.3","9.5","1.0","3","2 of 4","50%","0%","100%","Satellite only","Not yet"],["Disease Detectives","12","6","6","8.5","9.5","7.5","2","2 of 4","50%","0%","100%","Satellite only","Not yet"],["Dynamic Planet","12","2","2","9.5","10.0","9.0","2","2 of 4","50%","50%","50%","Both","Close"],["Remote Sensing","12","1","8","3.5","5.0","2.0","3","3 of 4","75%","50%","100%","Both","Ready","","","Sohan","Shreyas J"],["Rocks and Minerals","12","4","4","44.8","7.0","82.5","1","1 of 4","25%","50%","0%","In-person only","Close","","","Abhinav","Aarush"],["History of Science","2","1","1","1.0","1.0","","1","1 of 1","100%","100%","","Not enough data","Ready"],["Medicinal Chemistry","2","10","10","10.0","10.0","","0","0 of 1","0%","0%","","Not enough data","Not yet"],["Mind Over Matter","2","6","6","6.0","6.0","","0","0 of 1","0%","0%","","Not enough data","Not yet"],["Rocket Science","2","8","8","8.0","8.0","","0","0 of 1","0%","0%","","Not enough data","Not yet"],["Silicon Showdown","2","3","3","3.0","3.0","","1","1 of 1","100%","100%","","Not enough data","Ready"],["Fermish Questions","2","8","8","8.0","8.0","","0","0 of 1","0%","0%","","Not enough data","Not yet"],["Pokémon Trivia","2","1","1","1.0","1.0","","1","1 of 1","100%","100%","","Not enough data","Ready"],["Sports Trivia","2","5","5","5.0","5.0","","0","0 of 1","0%","0%","","Not enough data","Not yet"],["Brainrot","3","19","19","19.0","","19.0","1","1 of 1","100%","","100%","Not enough data"],["History of Scioly","3","12","12","12.0","","12.0","1","1 of 1","100%","","100%","Not enough data"],["Pokemon Pathology","3","3","3","3.0","","3.0","1","1 of 1","100%","","100%","Not enough data"]],"11":[["t"],["n"],["Event","National event?","Team A invitationals medaled"],["Anatomy and Physiology","Yes","1 of 4"],["Astronomy","Yes","1 of 3"],["Botany","Yes","0 of 3"],["Codebusters","Yes","3 of 4"],["Designer Genes","Yes","2 of 4"],["Disease Detectives","Yes","1 of 4"],["Dynamic Planet","Yes","2 of 4"],["Remote Sensing","Yes","2 of 4"],["Rocks and Minerals","Yes","1 of 4"],["Chemistry Lab","Yes","0 of 4"],["Circuit Lab","Yes","0 of 4"],["Engineering CAD","Yes","0 of 3"],["Experimental Design","Yes","2 of 3"],["Forensics","Yes","0 of 4"],["Protein Modeling","Yes","4 of 4"],["Water Quality","Yes","1 of 4"],["Boomilever","Yes","0 of 2"],["Electric Vehicle","Yes","3 of 4"],["Hovercraft","Yes","0 of 3"],["Mission Possible","Yes","1 of 3"],["Ping Pong Parachute","Yes","2 of 3"],["Thermodynamics","Yes","3 of 4"],["Wright Stuff","Yes","2 of 3"],["History of Science","No","1 of 1"],["Medicinal Chemistry","No","0 of 1"],["Mind Over Matter","No","0 of 1"],["Rocket Science","No","0 of 1"],["Silicon Showdown","No","1 of 1"],["Fermish Questions","No","0 of 1"],["Pokémon Trivia","No","0 of 1"],["Sports Trivia","No","0 of 1"],["Brainrot","No","0 of 1"],["History of Scioly","No","1 of 1"],["Materials Science","No","0 of 1"],["Pokemon Pathology","No","1 of 1"]],"10":[["Bridgeland H.S. Science Olympiad results, 2026-27 season (Division C)"],["Yellow columns: team fills in. Gray columns: calculated, do not edit. Results pulled from Duosmium on 11/25/2026. Each invitational's format and medal cutoff are set on the Lists tab."],["Date","Invitational","Format","Event","Event type","Team name","Competitor 1","Competitor 2","Placement","Teams in event","Medaled?","Raw score","1st place score","Tier","Penalty / issue","Strong field?","Comments","Source"],["10/03/2026","Highlands Invitational","Satellite","Anatomy and Physiology","Study","Falsity","","","4","80","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Astronomy","Study","Falsity","","","13","71","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Botany","Study","Falsity","","","16","82","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Codebusters","Study","Falsity","","","14","77","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Designer Genes","Study","Falsity","","","3","77","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Disease Detectives","Study","Falsity","","","7","81","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Dynamic Planet","Study","Falsity","","","15","68","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Remote Sensing","Study","Falsity","","","36","64","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Rocks and Minerals","Study","Falsity","","","15","70","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Chemistry Lab","Lab","Falsity","","","2","76","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Circuit Lab","Lab","Falsity","","","5","72","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Experimental Design","Lab","Falsity","","","21","63","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Forensics","Lab","Falsity","","","8","76","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Protein Modeling","Lab","Falsity","","","2","65","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Water Quality","Lab","Falsity","","","9","71","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Boomilever","Build","Falsity","","","","29","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Electric Vehicle","Build","Falsity","","","","24","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Hovercraft","Build","Falsity","","","","19","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Ping Pong Parachute","Build","Falsity","","","","23","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Thermodynamics","Lab","Falsity","","","11","74","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Wright Stuff","Build","Falsity","","","","26","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Anatomy and Physiology","Study","Lovity","","","61","80","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Astronomy","Study","Lovity","","","53","71","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Botany","Study","Lovity","","","52","82","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Codebusters","Study","Lovity","","","43","77","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Designer Genes","Study","Lovity","","","53","77","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Disease Detectives","Study","Lovity","","","28","81","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Dynamic Planet","Study","Lovity","","","47","68","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Remote Sensing","Study","Lovity","","","59","64","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Rocks and Minerals","Study","Lovity","","","55","70","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Chemistry Lab","Lab","Lovity","","","59","76","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Circuit Lab","Lab","Lovity","","","54","72","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Experimental Design","Lab","Lovity","","","28","63","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Forensics","Lab","Lovity","","","65","76","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Protein Modeling","Lab","Lovity","","","50","65","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Boomilever","Build","Lovity","","","25","29","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Electric Vehicle","Build","Lovity","","","13","24","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Ping Pong Parachute","Build","Lovity","","","20","23","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Thermodynamics","Lab","Lovity","","","59","74","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Wright Stuff","Build","Lovity","","","","26","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Anatomy and Physiology","Study","Moggity","","","78","80","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Astronomy","Study","Moggity","","","67","71","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Botany","Study","Moggity","","","80","82","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Codebusters","Study","Moggity","","","","77","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Designer Genes","Study","Moggity","","","61","77","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Disease Detectives","Study","Moggity","","","54","81","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Dynamic Planet","Study","Moggity","","","66","68","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Remote Sensing","Study","Moggity","","","3","64","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Rocks and Minerals","Study","Moggity","","","35","70","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Chemistry Lab","Lab","Moggity","","","76","76","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Circuit Lab","Lab","Moggity","","","15","72","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Experimental Design","Lab","Moggity","","","","63","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Forensics","Lab","Moggity","","","52","76","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Protein Modeling","Lab","Moggity","","","57","65","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Water Quality","Lab","Moggity","","","67","71","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Boomilever","Build","Moggity","","","9","29","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Thermodynamics","Lab","Moggity","","","12","74","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Wright Stuff","Build","Moggity","","","6","26","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Anatomy and Physiology","Study","Verity","","","33","80","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Botany","Study","Verity","","","46","82","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Codebusters","Study","Verity","","","21","77","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Designer Genes","Study","Verity","","","1","77","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Disease Detectives","Study","Verity","","","56","81","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Dynamic Planet","Study","Verity","","","38","68","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Remote Sensing","Study","Verity","","","9","64","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Rocks and Minerals","Study","Verity","","","50","70","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Chemistry Lab","Lab","Verity","","","9","76","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Circuit Lab","Lab","Verity","","","16","72","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Experimental Design","Lab","Verity","","","12","63","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Forensics","Lab","Verity","","","59","76","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Protein Modeling","Lab","Verity","","","8","65","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Water Quality","Lab","Verity","","","20","71","No","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Electric Vehicle","Build","Verity","","","8","24","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Hovercraft","Build","Verity","","","","19","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Mission Possible","Build","Verity","","","","13","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Ping Pong Parachute","Build","Verity","","","1","23","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Thermodynamics","Lab","Verity","","","1","74","Yes","","","","","","","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/03/2026","Highlands Invitational","Satellite","Wright Stuff","Build","Verity","","","","26","","","","","Participation only","","Competed but got no ranked score","https://www.duosmium.org/results/2026-10-03_highlands_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Anatomy and Physiology","Study","Azul","","","147","283","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Astronomy","Study","Azul","","","185","256","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Botany","Study","Azul","","","117","266","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Brainrot","Study","Azul","","","19","151","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Codebusters","Study","Azul","","","117","269","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Designer Genes","Study","Azul","","","155","267","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Disease Detectives","Study","Azul","","","143","273","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Dynamic Planet","Study","Azul","","","213","253","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","History of Scioly","Study","Azul","","","23","45","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Pokemon Pathology","Study","Azul","","","28","92","No","","","","","","Trial event at this tournament. Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Remote Sensing","Study","Azul","","","78","239","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Rocks and Minerals","Study","Azul","","","233","267","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Chemistry Lab","Lab","Azul","","","113","268","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Circuit Lab","Lab","Azul","","","70","251","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Engineering CAD","Lab","Azul","","","91","241","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Experimental Design","Lab","Azul","","","56","237","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Forensics","Lab","Azul","","","161","269","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Materials Science","Lab","Azul","","","38","44","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Protein Modeling","Lab","Azul","","","30","255","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Water Quality","Lab","Azul","","","258","266","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Boomilever","Build","Azul","","","12","53","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Hovercraft","Build","Azul","","","20","33","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Mission Possible","Build","Azul","","","19","19","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Ping Pong Parachute","Build","Azul","","","10","44","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Thermodynamics","Lab","Azul","","","13","249","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Wright Stuff","Build","Azul","","","12","28","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Anatomy and Physiology","Study","Blanco","","","167","283","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Astronomy","Study","Blanco","","","207","256","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Botany","Study","Blanco","","","174","266","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Brainrot","Study","Blanco","","","80","151","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Codebusters","Study","Blanco","","","205","269","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Designer Genes","Study","Blanco","","","248","267","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Disease Detectives","Study","Blanco","","","221","273","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Dynamic Planet","Study","Blanco","","","125","253","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","History of Scioly","Study","Blanco","","","36","45","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Pokemon Pathology","Study","Blanco","","","45","92","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Remote Sensing","Study","Blanco","","","75","239","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Rocks and Minerals","Study","Blanco","","","210","267","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Chemistry Lab","Lab","Blanco","","","201","268","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Circuit Lab","Lab","Blanco","","","246","251","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Engineering CAD","Lab","Blanco","","","181","241","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Experimental Design","Lab","Blanco","","","128","237","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Forensics","Lab","Blanco","","","168","269","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Protein Modeling","Lab","Blanco","","","214","255","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Water Quality","Lab","Blanco","","","197","266","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Boomilever","Build","Blanco","","","2","53","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Thermodynamics","Lab","Blanco","","","128","249","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Anatomy and Physiology","Study","Naranja","","","13","283","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Astronomy","Study","Naranja","","","130","256","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Brainrot","Study","Naranja","","","31","151","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Codebusters","Study","Naranja","","","17","269","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Designer Genes","Study","Naranja","","","1","267","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Disease Detectives","Study","Naranja","","","8","273","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Dynamic Planet","Study","Naranja","","","3","253","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","History of Scioly","Study","Naranja","","","12","45","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Pokemon Pathology","Study","Naranja","","","3","92","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Remote Sensing","Study","Naranja","","","1","239","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Rocks and Minerals","Study","Naranja","","","150","267","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Chemistry Lab","Lab","Naranja","","","110","268","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Circuit Lab","Lab","Naranja","","","66","251","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Engineering CAD","Lab","Naranja","","","24","241","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Forensics","Lab","Naranja","","","65","269","No","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Materials Science","Lab","Naranja","","","42","44","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Protein Modeling","Lab","Naranja","","","2","255","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Water Quality","Lab","Naranja","","","117","266","No","","","","","","Tie","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Electric Vehicle","Build","Naranja","","","4","27","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["10/31/2026","Rickards Invitational","Satellite","Thermodynamics","Lab","Naranja","","","3","249","Yes","","","","","","","https://www.duosmium.org/results/2026-10-31_rickards_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Anatomy and Physiology","Study","Blue","","","18","44","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Astronomy","Study","Blue","","","24","39","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Botany","Study","Blue","","","10","44","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Codebusters","Study","Blue","","","10","43","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Designer Genes","Study","Blue","","","29","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Disease Detectives","Study","Blue","","","15","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Dynamic Planet","Study","Blue","","","18","44","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Fermish Questions","Study","Blue","","","8","20","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","History of Science","Study","Blue","","","16","31","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Medicinal Chemistry","Study","Blue","","","18","31","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Mind Over Matter","Study","Blue","","","17","29","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Pokémon Trivia","Study","Blue","","","1","26","Yes","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Remote Sensing","Study","Blue","","","10","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Rocket Science","Study","Blue","","","8","34","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Rocks and Minerals","Study","Blue","","","21","43","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Silicon Showdown","Study","Blue","","","17","27","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Sports Trivia","Study","Blue","","","18","22","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Chemistry Lab","Lab","Blue","","","6","41","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Circuit Lab","Lab","Blue","","","17","41","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Engineering CAD","Lab","Blue","","","25","39","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Experimental Design","Lab","Blue","","","12","44","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Forensics","Lab","Blue","","","17","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Protein Modeling","Lab","Blue","","","6","36","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Water Quality","Lab","Blue","","","10","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Boomilever","Build","Blue","","","6","33","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Electric Vehicle","Build","Blue","","","11","34","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Hovercraft","Build","Blue","","","8","30","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Mission Possible","Build","Blue","","","","22","","","","","No-show","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Ping Pong Parachute","Build","Blue","","","4","37","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Thermodynamics","Lab","Blue","","","10","40","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Wright Stuff","Build","Blue","","","17","34","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Anatomy and Physiology","Study","Orange","","","15","44","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Astronomy","Study","Orange","","","5","39","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Botany","Study","Orange","","","17","44","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Codebusters","Study","Orange","","","3","43","Yes","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Designer Genes","Study","Orange","","","14","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Disease Detectives","Study","Orange","","","13","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Dynamic Planet","Study","Orange","","","21","44","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Fermish Questions","Study","Orange","","","17","20","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","History of Science","Study","Orange","","","1","31","Yes","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Medicinal Chemistry","Study","Orange","","","10","31","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Mind Over Matter","Study","Orange","","","6","29","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Pokémon Trivia","Study","Orange","","","5","26","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Remote Sensing","Study","Orange","","","2","42","Yes","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Rocket Science","Study","Orange","","","17","34","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Rocks and Minerals","Study","Orange","","","10","43","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Silicon Showdown","Study","Orange","","","3","27","Yes","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Sports Trivia","Study","Orange","","","5","22","No","","","","","","Trial event at this tournament","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Chemistry Lab","Lab","Orange","","","12","41","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Circuit Lab","Lab","Orange","","","5","41","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Engineering CAD","Lab","Orange","","","7","39","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Experimental Design","Lab","Orange","","","1","44","Yes","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Forensics","Lab","Orange","","","9","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Protein Modeling","Lab","Orange","","","3","36","Yes","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Water Quality","Lab","Orange","","","24","42","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Boomilever","Build","Orange","","","7","33","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Electric Vehicle","Build","Orange","","","22","34","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Hovercraft","Build","Orange","","","17","30","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Mission Possible","Build","Orange","","","8","22","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Ping Pong Parachute","Build","Orange","","","17","37","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Thermodynamics","Lab","Orange","","","24","40","No","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/14/2026","UT Austin Invitational","In-person","Wright Stuff","Build","Orange","","","1","34","Yes","","","","","","","https://www.duosmium.org/results/2026-11-14_ut_austin_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Anatomy and Physiology","Study","Team 1","","","8","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Astronomy","Study","Team 1","","","3","24","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Botany","Study","Team 1","","","","22","","","","","No-show","","Exempt (not counted)","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Codebusters","Study","Team 1","","","2","24","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Designer Genes","Study","Team 1","","","5","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Disease Detectives","Study","Team 1","","","6","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Dynamic Planet","Study","Team 1","","","2","24","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Remote Sensing","Study","Team 1","","","8","21","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Rocks and Minerals","Study","Team 1","","","4","22","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Chemistry Lab","Lab","Team 1","","","8","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Circuit Lab","Lab","Team 1","","","9","23","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Engineering CAD","Lab","Team 1","","","6","19","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Experimental Design","Lab","Team 1","","","1","24","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Forensics","Lab","Team 1","","","5","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Protein Modeling","Lab","Team 1","","","3","23","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Water Quality","Lab","Team 1","","","2","24","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Boomilever","Build","Team 1","","","5","13","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Electric Vehicle","Build","Team 1","","","1","16","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Hovercraft","Build","Team 1","","","9","16","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Mission Possible","Build","Team 1","","","4","4","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Ping Pong Parachute","Build","Team 1","","","3","17","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Thermodynamics","Lab","Team 1","","","2","23","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Wright Stuff","Build","Team 1","","","1","18","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Anatomy and Physiology","Study","Team 2","","","4","22","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Astronomy","Study","Team 2","","","6","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Botany","Study","Team 2","","","5","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Codebusters","Study","Team 2","","","6","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Designer Genes","Study","Team 2","","","","22","","","","","No-show","","Exempt (not counted)","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Disease Detectives","Study","Team 2","","","9","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Dynamic Planet","Study","Team 2","","","6","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Remote Sensing","Study","Team 2","","","14","21","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Rocks and Minerals","Study","Team 2","","","15","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Chemistry Lab","Lab","Team 2","","","19","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Circuit Lab","Lab","Team 2","","","14","23","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Engineering CAD","Lab","Team 2","","","10","19","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Experimental Design","Lab","Team 2","","","10","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Forensics","Lab","Team 2","","","14","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Protein Modeling","Lab","Team 2","","","6","23","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Water Quality","Lab","Team 2","","","10","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Boomilever","Build","Team 2","","","1","13","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Electric Vehicle","Build","Team 2","","","4","16","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Hovercraft","Build","Team 2","","","4","16","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Mission Possible","Build","Team 2","","","2","4","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Ping Pong Parachute","Build","Team 2","","","1","17","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Thermodynamics","Lab","Team 2","","","13","23","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Wright Stuff","Build","Team 2","","","4","18","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Anatomy and Physiology","Study","Team 3","","","10","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Astronomy","Study","Team 3","","","9","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Botany","Study","Team 3","","","20","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Codebusters","Study","Team 3","","","13","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Designer Genes","Study","Team 3","","","9","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Disease Detectives","Study","Team 3","","","20","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Dynamic Planet","Study","Team 3","","","13","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Remote Sensing","Study","Team 3","","","16","21","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Rocks and Minerals","Study","Team 3","","","10","22","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Chemistry Lab","Lab","Team 3","","","13","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Circuit Lab","Lab","Team 3","","","16","23","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Engineering CAD","Lab","Team 3","","","","19","","","","","No-show","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Experimental Design","Lab","Team 3","","","19","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Forensics","Lab","Team 3","","","11","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Protein Modeling","Lab","Team 3","","","16","23","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Water Quality","Lab","Team 3","","","22","24","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Boomilever","Build","Team 3","","","4","13","Yes","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Electric Vehicle","Build","Team 3","","","","16","","","","","No-show","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Hovercraft","Build","Team 3","","","7","16","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Mission Possible","Build","Team 3","","","","4","","","","","No-show","","Exempt (not counted)","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Ping Pong Parachute","Build","Team 3","","","","17","","","","","No-show","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Thermodynamics","Lab","Team 3","","","21","23","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"],["11/21/2026","University of Houston Invitational","In-person","Wright Stuff","Build","Team 3","","","7","18","No","","","","","","","https://www.duosmium.org/results/2026-11-21_u_of_houston_invitational_c/"]]};
+/* ===================== SETTINGS ===================== */
+const CONFIG = {
+  // Paste the link Google gives you under File > Share > Publish to web
+  // (Entire document, Comma-separated values). It looks like
+  // https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?output=csv
+  PUBLISHED_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTdU5t4oWtfv32NhqaWJBn6rw9HkefUBTMHG3tNuJTZNFSGE_wiMNMsxV73j6NG_IpENjV-msCsuKbt/pubhtml',
+  // Tab ids inside the tracker (the gid= number in each tab's URL).
+  TABS: {results: 10, events: 11, categories: 12, lists: 13, build: 14, lab: 15, study: 16},
+  // SHA-256 of "username:password". See README to change the login.
+  LOGIN_HASH: '9b8fdcd65666a1f887314081f7e5e30053e83778796084c1751d76775160428a'
+};
+/* ==================================================== */
+
+function sha256Hex(str) {
+  const rr = (n, x) => (x >>> n) | (x << (32 - n));
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const bytes = new TextEncoder().encode(str);
+  const len = bytes.length, bitLen = len * 8;
+  const padLen = ((len + 9 + 63) >> 6) << 6;
+  const m = new Uint8Array(padLen); m.set(bytes); m[len] = 0x80;
+  const dv = new DataView(m.buffer);
+  dv.setUint32(padLen - 4, bitLen >>> 0); dv.setUint32(padLen - 8, Math.floor(bitLen / 4294967296));
+  let h = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const w = new Uint32Array(64);
+  for (let o = 0; o < padLen; o += 64) {
+    for (let i = 0; i < 16; i++) w[i] = dv.getUint32(o + i * 4);
+    for (let i = 16; i < 64; i++) { const s0 = rr(7, w[i-15]) ^ rr(18, w[i-15]) ^ (w[i-15] >>> 3); const s1 = rr(17, w[i-2]) ^ rr(19, w[i-2]) ^ (w[i-2] >>> 10); w[i] = (w[i-16] + s0 + w[i-7] + s1) >>> 0; }
+    let [a, b, c, d, e, f, g, hh] = h;
+    for (let i = 0; i < 64; i++) { const S1 = rr(6, e) ^ rr(11, e) ^ rr(25, e); const ch = (e & f) ^ (~e & g); const t1 = (hh + S1 + ch + K[i] + w[i]) >>> 0; const S0 = rr(2, a) ^ rr(13, a) ^ rr(22, a); const mj = (a & b) ^ (a & c) ^ (b & c); const t2 = (S0 + mj) >>> 0; hh = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = b; b = a; a = (t1 + t2) >>> 0; }
+    h = [h[0]+a, h[1]+b, h[2]+c, h[3]+d, h[4]+e, h[5]+f, h[6]+g, h[7]+hh].map((x) => x >>> 0);
+  }
+  return h.map((x) => x.toString(16).padStart(8, '0')).join('');
+}
+
+function parseCSV(text) {
+  const rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (q) { if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
+    else if (ch === '"') q = true;
+    else if (ch === ',') { row.push(cur); cur = ''; }
+    else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+    else if (ch !== '\r') cur += ch;
+  }
+  if (cur !== '' || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+function cellValue(v) {
+  if (v === undefined || v === null) return null;
+  const s = String(v).trim();
+  if (s === '') return null;
+  if (/^-?\d+(\.\d+)?%$/.test(s)) return parseFloat(s) / 100;
+  if (/^-?\d+(\.\d+)?$/.test(s)) return Number(s);
+  return s;
+}
+function tableFrom(grid, headText, c0, c1) {
+  c0 = c0 || 0;
+  const r = grid.findIndex((row) => String(row[c0] == null ? '' : row[c0]).trim() === headText);
+  if (r < 0) throw new Error('Could not find the "' + headText + '" header in the published sheet.');
+  const end = c1 || grid[r].length;
+  const head = grid[r].slice(c0, end).map((h, i) => String(h || '').trim() || ('Column ' + (i + 1)));
+  return grid.slice(r + 1)
+    .filter((row) => String(row[c0] == null ? '' : row[c0]).trim() !== '')
+    .map((row) => { const o = {}; head.forEach((h, i) => { o[h] = cellValue(row[c0 + i]); }); return o; });
+}
+
+window.dash = (() => {
+  const REG = {}, CALCS = [], S = {status: 'loading', data: {}, error: null};
+  const run = (name) => {
+    const fn = REG[name]; if (!fn) return;
+    document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => { try { fn(el); } catch (e) { console.error('Drawing ' + name + ' failed', e); } });
+  };
+  return {
+    colors: ['var(--so-build-c)', 'var(--so-lab-c)', 'var(--so-study-c)'],
+    data: (id) => ({status: S.status, data: S.data[id] !== undefined ? S.data[id] : [], message: S.error}),
+    calc: (id, spec) => { CALCS.push(Object.assign({id}, spec)); },
+    loader: () => {},
+    draw: (name, fn) => { if (fn) { REG[name] = fn; run(name); } else run(name); },
+    _set: (status, data, err) => {
+      S.status = status; S.error = err || null;
+      if (data) {
+        S.data = data;
+        CALCS.forEach((c) => { try { S.data[c.id] = c.fn(...c.inputs.map((i) => S.data[i] || [])); } catch (e) { console.error('Calculation ' + c.id + ' failed', e); S.data[c.id] = []; } });
+      }
+      Object.keys(REG).forEach(run);
+    },
+    _redrawAll: () => Object.keys(REG).forEach(run)
+  };
+})();
+
+</script>
+<script>
+dash.calc('summary', {
+  title: 'Event readiness, all categories',
+  description: 'Build, Lab and Study Summary tabs combined, with the national flag and Team A columns from Event Summary.',
+  inputs: ['build', 'lab', 'study', 'events'],
+  fn: (build, lab, study, events) => {
+    const ev = new Map(events.map((e) => [e['Event'], e]));
+    const out = [];
+    [['Build', build, 'Build event'], ['Lab', lab, 'Lab event'], ['Study', study, 'Study event']].forEach(([cat, rows, key]) => {
+      rows.forEach((r) => {
+        const name = r[key];
+        if (!name) return;
+        const e = ev.get(name) || {};
+        const norm = (v) => ({'yes': 'Ready', 'ready': 'Ready', 'close': 'Close', 'not yet': 'Not yet', 'not ready': 'Not yet', 'no': 'Not yet'})[String(v == null ? '' : v).trim().toLowerCase()];
+        const cap = norm(r['State ready? (captain)']);
+        const sug = norm(r['Suggested readiness']) || r['Suggested readiness'] || 'Not enough data';
+        out.push({
+          'Event': name,
+          'Category': cat,
+          'National': e['National event?'] || 'No',
+          'Readiness': cap || sug,
+          'Suggested readiness': sug,
+          'Set by': cap ? 'Captain' : 'Formula',
+          'Best place': r['Best place'],
+          'Avg place': r['Avg place (best team)'],
+          'Avg in-person place': r['Avg in-person place (best team)'],
+          'Avg satellite place': r['Avg satellite place (best team)'],
+          'Medals': r['Medals (all teams)'],
+          'Invitationals medaled': r['Invitationals medaled (best team)'],
+          'Medal rate': r['Medal rate (best team)'],
+          'In-person medal rate': r['In-person: best team medal rate'],
+          'Satellite medal rate': r['Satellite: best team medal rate'],
+          'Satellite vs in-person': r['Satellite vs in-person'],
+          'Captain state ready': r['State ready? (captain)'],
+          'Competitor 1': r['Best competitor 1'],
+          'Competitor 2': r['Best competitor 2'],
+          'Competitor 3': r['Best Competitor 3'] || r['Best competitor 3'],
+          'Backup': r['Backup competitor'],
+          'Weakness': r['Biggest weakness'],
+          'Next steps': r['Next steps'],
+          'Owner': r['Next step owner'],
+          'Team A invitationals medaled': e['Team A invitationals medaled']
+        });
+      });
+    });
+    return out;
+  }
+});
+
+dash.calc('readiness', {
+  title: 'Readiness counts',
+  description: 'Number of events at each readiness level, for national events and for all events.',
+  inputs: ['summary'],
+  fn: (summary) => {
+    const rows = [];
+    [['National', summary.filter((r) => r['National'] === 'Yes')], ['All', summary]].forEach(([scope, list]) => {
+      ['Ready', 'Close', 'Not yet'].forEach((lvl) => rows.push({scope, readiness: lvl, events: list.filter((r) => r['Readiness'] === lvl).length}));
+      rows.push({scope, readiness: 'Total', events: list.filter((r) => ['Ready', 'Close', 'Not yet'].includes(r['Readiness'])).length});
+      rows.push({scope, readiness: 'Satellite only', events: list.filter((r) => r['Satellite vs in-person'] === 'Satellite only').length});
+    });
+    return rows;
+  }
+});
+
+dash.calc('heat', {
+  title: 'Best place by event and invitational',
+  description: 'For each event at each invitational, the best Bridgeland placement and whether it was within that invitational\'s medal cutoff.',
+  inputs: ['results', 'invitationals'],
+  fn: (results, invitationals) => {
+    const cut = new Map(invitationals.filter((i) => i['Invitational']).map((i) => [i['Invitational'], i['Medal cutoff (top N)']]));
+    const groups = new Map();
+    results.forEach((r) => {
+      if (!r['Event'] || !r['Invitational']) return;
+      const k = r['Event'] + '\u0000' + r['Invitational'];
+      if (!groups.has(k)) groups.set(k, []);
+      groups.get(k).push(r);
+    });
+    const out = [];
+    groups.forEach((rows, k) => {
+      const [event, inv] = k.split('\u0000');
+      const ranked = rows.filter((r) => typeof r['Placement'] === 'number');
+      const best = ranked.length ? ranked.reduce((a, b) => (b['Placement'] < a['Placement'] ? b : a)) : null;
+      const c = cut.get(inv);
+      out.push({
+        'Event': event,
+        'Invitational': inv,
+        'Category': rows[0]['Event type'],
+        'Best': best ? best['Placement'] : null,
+        'Best team': best ? best['Team name'] : null,
+        'Medal': best && typeof c === 'number' && best['Placement'] <= c ? 'Yes' : 'No',
+        'Status': best ? 'Ranked' : (rows.some((r) => r['Penalty / issue'] === 'No-show') ? 'No-show' : 'No rank')
+      });
+    });
+    return out;
+  }
+});
+
+dash.calc('catCounts', {
+  title: 'Readiness counts by category',
+  description: 'Number of Build, Lab and Study events at each readiness level, for national events and for all events.',
+  inputs: ['summary'],
+  fn: (summary) => {
+    const rows = [];
+    [['National', summary.filter((r) => r['National'] === 'Yes')], ['All', summary]].forEach(([scope, list]) => {
+      ['Build', 'Lab', 'Study'].forEach((cat) => {
+        const c = list.filter((r) => r['Category'] === cat);
+        ['Ready', 'Close', 'Not yet'].forEach((lvl) => rows.push({scope, Category: cat, readiness: lvl, events: c.filter((r) => r['Readiness'] === lvl).length}));
+        rows.push({scope, Category: cat, readiness: 'Total', events: c.length});
+      });
+    });
+    return rows;
+  }
+});
+
+dash.calc('ipMedals', {
+  title: 'In-person invitationals medaled',
+  description: 'For each event, the in-person invitationals where Bridgeland competed, and how many of them the best Bridgeland result medaled at.',
+  inputs: ['heat', 'invitationals'],
+  fn: (heat, invitationals) => {
+    const ip = new Set(invitationals.filter((i) => i['Format'] === 'In-person').map((i) => i['Invitational']));
+    const m = new Map();
+    heat.forEach((h) => {
+      if (!ip.has(h['Invitational'])) return;
+      const o = m.get(h['Event']) || {n: 0, y: 0};
+      o.n += 1;
+      if (h['Medal'] === 'Yes') o.y += 1;
+      m.set(h['Event'], o);
+    });
+    return Array.from(m, ([event, o]) => ({'Event': event, 'In-person medaled': o.y + ' of ' + o.n, 'Medaled': o.y, 'Competed': o.n}));
+  }
+});
+
+</script>
+<script>
+window.SO = window.SO || {cat: 'All', national: true, sort: 'readiness', sel: null};
+window.SOU = {
+  ok: (id) => dash.data(id).status === 'ok',
+  pct: (v) => (typeof v === 'number' ? Math.round(v * 100) + '%' : '–'),
+  num: (v, d) => (typeof v === 'number' ? v.toFixed(d == null ? 1 : d) : '–'),
+  typeColor: (t) => ({Build: dash.colors[0], Lab: dash.colors[1], Study: dash.colors[2]}[t] || 'var(--cds-chart-muted)'),
+  rColor: (r) => ({Ready: 'var(--color-ok)', Close: 'var(--color-warn)', 'Not yet': 'var(--color-bad)'}[r] || 'var(--cds-chart-muted)'),
+  rClass: (r) => ({Ready: 'r-Ready', Close: 'r-Close', 'Not yet': 'r-Not'}[r] || 'r-none'),
+  rank: (r) => ({Ready: 0, Close: 1, 'Not yet': 2}[r] ?? 3),
+  enc: (s) => String(s == null ? '' : s).replace(/%/g, '%25').replace(/&/g, '%26').replace(/=/g, '%3D').replace(/,/g, '%2C'),
+  events: () => {
+    const d = dash.data('summary');
+    if (d.status !== 'ok' || !Array.isArray(d.data)) return null;
+    let rows = d.data.filter((r) => (window.SO.national ? r['National'] === 'Yes' : true));
+    return rows;
+  },
+  sorted: (rows) => {
+    const s = window.SO.sort, U = window.SOU;
+    const byPlace = (a, b) => (a['Avg in-person place'] ?? 99) - (b['Avg in-person place'] ?? 99);
+    const f = {
+      readiness: (a, b) => U.rank(a['Readiness']) - U.rank(b['Readiness']) || byPlace(a, b) || a['Event'].localeCompare(b['Event']),
+      place: (a, b) => byPlace(a, b) || a['Event'].localeCompare(b['Event']),
+      rate: (a, b) => (b['In-person medal rate'] ?? -1) - (a['In-person medal rate'] ?? -1) || byPlace(a, b),
+      name: (a, b) => a['Event'].localeCompare(b['Event'])
+    }[s];
+    return rows.slice().sort(f);
+  },
+  catRows: () => {
+    const rows = window.SOU.events();
+    if (!rows) return null;
+    const c = window.SO.cat;
+    return window.SOU.sorted(c === 'All' ? rows : rows.filter((r) => r['Category'] === c));
+  },
+  select: (name) => {
+    window.SO.sel = name;
+    ['detailName', 'detailPills', 'detailHint', 'detailStats', 'detailRows', 'evtBody'].forEach((n) => dash.draw(n));
+    const el = document.getElementById('detail');
+    if (el && el.scrollIntoView) el.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  },
+  redraw: () => ['board', 'boardCount', 'placeChart', 'heat', 'evtBody', 'satList', 'catSummary', 'sumCount'].forEach((n) => dash.draw(n)),
+  tip: (host) => {
+    let t = host.querySelector('.so-tip');
+    if (!t) { t = document.createElement('div'); t.className = 'so-tip'; host.appendChild(t); }
+    return {
+      show: (ev, text) => {
+        t.textContent = text; t.style.opacity = '1';
+        const r = host.getBoundingClientRect();
+        let x = ev.clientX - r.left + 12, y = ev.clientY - r.top - 28;
+        const w = t.offsetWidth;
+        if (x + w > host.clientWidth) x = host.clientWidth - w - 4;
+        t.style.left = Math.max(0, x) + 'px'; t.style.top = Math.max(0, y) + 'px';
+      },
+      hide: () => { t.style.opacity = '0'; }
+    };
+  }
+};
+
+document.querySelectorAll('.so-tab').forEach((b) => b.addEventListener('click', () => {
+  window.SO.cat = b.dataset.cat;
+  document.querySelectorAll('.so-tab').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+  ['placeChart', 'heat', 'evtBody'].forEach((n) => dash.draw(n));
+}));
+document.querySelectorAll('.so-national').forEach((c) => c.addEventListener('change', () => { window.SO.national = c.checked; window.SOU.redraw(); }));
+document.querySelectorAll('.so-sort').forEach((s) => s.addEventListener('change', () => { window.SO.sort = s.value; ['placeChart', 'heat', 'evtBody'].forEach((n) => dash.draw(n)); }));
+
+document.querySelectorAll('.so').forEach((e) => { e.style.setProperty('--so-c0', dash.colors[0]); e.style.setProperty('--so-c1', dash.colors[1]); e.style.setProperty('--so-c2', dash.colors[2]); });
+dash.draw('swIP', (el) => { el.style.background = 'var(--color-fg)'; });
+dash.draw('swSat', (el) => { el.style.background = 'color-mix(in srgb,var(--color-fg) 35%,transparent)'; });
+dash.draw('swReady', (el) => { el.style.background = 'var(--color-ok)'; });
+dash.draw('swClose', (el) => { el.style.background = 'var(--color-warn)'; });
+dash.draw('swNot', (el) => { el.style.background = 'var(--color-bad)'; });
+dash.draw('swGold', (el) => { el.style.background = 'var(--color-ok)'; });
+dash.draw('swMedal', (el) => { el.style.background = 'color-mix(in srgb,var(--color-ok) 30%,transparent)'; });
+dash.draw('swRank', (el) => { el.style.background = 'color-mix(in srgb,var(--color-fg) 12%,transparent)'; });
+dash.draw('swP', (el) => { el.style.background = 'color-mix(in srgb,var(--color-warn) 30%,transparent)'; });
+
+function readinessVal(scope, lvl) {
+  const d = dash.data('readiness');
+  if (d.status !== 'ok' || !Array.isArray(d.data)) return null;
+  const r = d.data.find((x) => x.scope === scope && x.readiness === lvl);
+  return r ? r.events : 0;
+}
+function fill(el, v) {
+  const st = dash.data('readiness').status;
+  if (v == null) { el.textContent = st === 'loading' ? '' : '—'; if (st !== 'loading') el.classList.remove('dash-skeleton'); return; }
+  el.textContent = String(v); el.classList.remove('dash-skeleton');
+}
+dash.draw('kpiCount', (el) => fill(el, readinessVal('National', el.dataset.k)));
+dash.draw('takeReady', (el) => fill(el, readinessVal('National', 'Ready')));
+dash.draw('takeTotal', (el) => fill(el, readinessVal('National', 'Total')));
+dash.draw('takeSat', (el) => fill(el, readinessVal('National', 'Satellite only')));
+dash.draw('boardCount', (el) => {
+  const scope = window.SO.national ? 'National' : 'All';
+  el.setAttribute('data-where', 'scope=' + scope + '&readiness=' + el.dataset.col);
+  const v = readinessVal(scope, el.dataset.col);
+  el.textContent = v == null ? '—' : String(v);
+});
+
+function catData() {
+  const d = dash.data('categories');
+  return d.status === 'ok' && Array.isArray(d.data) ? d.data : null;
+}
+dash.draw('kpiCat', (el) => {
+  const rows = catData();
+  const st = dash.data('categories').status;
+  if (!rows) { el.textContent = st === 'loading' ? '' : '—'; if (st !== 'loading') el.classList.remove('dash-skeleton'); return; }
+  const r = rows.find((x) => x['Category'] === 'All events');
+  el.textContent = r && r[el.dataset.f] != null ? String(r[el.dataset.f]) : '—';
+  el.classList.remove('dash-skeleton');
+});
+function bestCat() {
+  const rows = catData();
+  if (!rows) return null;
+  const c = rows.filter((r) => ['Study', 'Lab', 'Build'].includes(r['Category']) && typeof r['Best team medal rate'] === 'number');
+  return c.length ? c.reduce((a, b) => (b['Best team medal rate'] > a['Best team medal rate'] ? b : a)) : null;
+}
+dash.draw('takeCat', (el) => { const b = bestCat(); el.textContent = b ? b['Category'] : '—'; });
+dash.draw('takeCatRate', (el) => {
+  const b = bestCat();
+  const st = dash.data('categories').status;
+  if (!b) { el.textContent = st === 'loading' ? '' : '—'; if (st !== 'loading') el.classList.remove('dash-skeleton'); return; }
+  el.setAttribute('data-where', 'Category=' + b['Category']);
+  el.textContent = window.SOU.pct(b['Best team medal rate']);
+  el.classList.remove('dash-skeleton');
+});
+
+dash.draw('catRows', (tb) => {
+  const rows = catData(); const U = window.SOU;
+  tb.replaceChildren();
+  if (!rows) { const tr = tb.insertRow(); const td = tr.insertCell(); td.colSpan = 6; td.textContent = dash.data('categories').status === 'error' ? 'Could not load categories.' : '—'; return; }
+  rows.forEach((r) => {
+    const tr = tb.insertRow();
+    const c0 = tr.insertCell();
+    if (['Build', 'Lab', 'Study'].includes(r['Category'])) { const s = document.createElement('span'); s.className = 'so-type'; const i = document.createElement('i'); i.style.background = U.typeColor(r['Category']); s.append(i, document.createTextNode(r['Category'])); c0.append(s); }
+    else { const b = document.createElement('b'); b.textContent = r['Category']; c0.append(b); }
+    [['Events', (v) => String(v ?? '–')], ['Medals (all teams)', (v) => String(v ?? '–')], ['1st places (all teams)', (v) => String(v ?? '–')], ['Best team medal rate', U.pct], ['Avg in-person place (best team)', (v) => U.num(v)]].forEach(([f, fmt]) => { const td = tr.insertCell(); td.className = 'n'; td.textContent = fmt(r[f]); });
+  });
+});
+
+dash.draw('catChart', (el) => {
+  const rows = catData(); const U = window.SOU;
+  el.querySelectorAll('svg').forEach((s) => s.remove());
+  if (!rows) { el.querySelectorAll('.so-msg').forEach((m) => m.remove()); const m = document.createElement('p'); m.className = 'so-hint so-msg'; m.textContent = dash.data('categories').status === 'error' ? 'Could not load the category data.' : '—'; el.append(m); return; }
+  el.querySelectorAll('.so-msg').forEach((m) => m.remove());
+  const cats = ['Build', 'Lab', 'Study'].map((c) => rows.find((r) => r['Category'] === c)).filter(Boolean);
+  const keys = [['In-person: best team medal rate', 'In-person', 1], ['Satellite: best team medal rate', 'Satellite', 0.4]];
+  const W = Math.max(260, el.clientWidth), H = 250, m = {t: 22, r: 8, b: 30, l: 40};
+  const x0 = d3.scaleBand().domain(cats.map((c) => c['Category'])).range([m.l, W - m.r]).padding(0.28);
+  const x1 = d3.scaleBand().domain(keys.map((k) => k[0])).range([0, x0.bandwidth()]).padding(0.12);
+  const y = d3.scaleLinear().domain([0, 1]).range([H - m.b, m.t]);
+  const svg = d3.select(el).append('svg').attr('width', W).attr('height', H).attr('role', 'img').attr('aria-label', 'Best-team medal rate by category, in-person and satellite');
+  svg.append('g').attr('class', 'so-axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d3.format('.0%')).tickSize(-(W - m.l - m.r))).call((g) => { g.select('.domain').remove(); g.selectAll('line').style('stroke', 'var(--cds-chart-grid)'); });
+  svg.append('g').attr('class', 'so-axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x0).tickSize(0)).call((g) => { g.select('.domain').remove(); g.selectAll('text').attr('dy', '1.2em').style('font-size', '12px'); });
+  const tip = U.tip(el);
+  const anim = window.matchMedia && window.matchMedia('(prefers-reduced-motion: no-preference)').matches && !el._drawn;
+  cats.forEach((c) => {
+    const g = svg.append('g').attr('transform', `translate(${x0(c['Category'])},0)`);
+    keys.forEach(([f, label, op]) => {
+      const v = typeof c[f] === 'number' ? c[f] : 0;
+      const r = g.append('rect').attr('x', x1(f)).attr('width', x1.bandwidth()).attr('rx', 4).style('fill', U.typeColor(c['Category'])).style('fill-opacity', op)
+        .attr('y', anim ? y(0) : y(v)).attr('height', anim ? 0 : y(0) - y(v))
+        .on('mousemove', (ev) => tip.show(ev, `${c['Category']} · ${label}: ${U.pct(c[f])}`)).on('mouseleave', tip.hide);
+      if (anim) r.transition().duration(700).ease(d3.easeCubicOut).attr('y', y(v)).attr('height', y(0) - y(v));
+      g.append('text').attr('x', x1(f) + x1.bandwidth() / 2).attr('y', y(v) - 6).attr('text-anchor', 'middle').style('fill', 'var(--color-fg)').style('font-size', '12px').style('font-variant-numeric', 'tabular-nums').text(U.pct(c[f]));
+    });
+  });
+  el._drawn = true;
+});
+
+dash.draw('board', (el) => {
+  const rows = window.SOU.events(); const U = window.SOU;
+  el.replaceChildren();
+  if (!rows) { const p = document.createElement('p'); p.className = 'so-hint'; p.textContent = dash.data('summary').status === 'error' ? 'Could not load events.' : '—'; el.append(p); return; }
+  const list = rows.filter((r) => r['Readiness'] === el.dataset.col).sort((a, b) => (a['Avg in-person place'] ?? 99) - (b['Avg in-person place'] ?? 99));
+  if (!list.length) { const p = document.createElement('p'); p.className = 'so-hint'; p.textContent = 'None'; el.append(p); return; }
+  list.forEach((r) => {
+    const b = document.createElement('button');
+    b.className = 'so-chip'; b.type = 'button';
+    b.style.borderLeftColor = U.typeColor(r['Category']);
+    const n = document.createElement('span'); n.textContent = r['Event'];
+    const s = document.createElement('small');
+    const ipd = dash.data('ipMedals');
+    const ipr = ipd.status === 'ok' && Array.isArray(ipd.data) ? ipd.data.find((x) => x['Event'] === r['Event']) : null;
+    const parts = [];
+    if (typeof r['Avg in-person place'] === 'number') parts.push(document.createTextNode('avg ' + r['Avg in-person place'].toFixed(1)));
+    if (ipr) { const ips = document.createElement('span'); ips.setAttribute('data-source', 'ipMedals'); ips.setAttribute('data-field', 'In-person medaled'); ips.setAttribute('data-where', 'Event=' + U.enc(r['Event'])); ips.textContent = ipr['In-person medaled']; parts.push(ips, document.createTextNode(' in person')); }
+    if (r['Invitationals medaled']) parts.push(document.createTextNode(r['Invitationals medaled'] + ' overall'));
+    if (r['Set by'] === 'Captain') parts.push(document.createTextNode('captain\u2019s call'));
+    const seq = [];
+    parts.forEach((p, idx) => { const prevIsIp = idx > 0 && parts[idx - 1].nodeType === 1; if (idx > 0 && !(prevIsIp && p.textContent === ' in person')) seq.push(document.createTextNode(' · ')); seq.push(p); });
+    s.append(...seq);
+    b.append(n, s);
+    b.addEventListener('click', () => U.select(r['Event']));
+    el.append(b);
+  });
+});
+
+function thr(i) {
+  const d = dash.data('thresholds');
+  if (d.status !== 'ok' || !Array.isArray(d.data) || !d.data[i]) return null;
+  return d.data[i]['Value'];
+}
+dash.draw('thr', (el) => {
+  const i = Number(el.dataset.i); const v = thr(i);
+  if (v == null) { el.textContent = '—'; return; }
+  el.textContent = (i === 0 || i === 2) ? window.SOU.pct(v) : String(v) + 'th place';
+});
+
+dash.draw('placeChart', (el) => {
+  const U = window.SOU; const all = U.catRows();
+  el.querySelectorAll('svg,.so-msg').forEach((s) => s.remove());
+  if (!all) { const m = document.createElement('p'); m.className = 'so-hint so-msg'; m.textContent = dash.data('summary').status === 'error' ? 'Could not load events.' : '—'; el.append(m); return; }
+  const rows = all.filter((r) => typeof r['Avg in-person place'] === 'number');
+  if (!rows.length) { const m = document.createElement('p'); m.className = 'so-hint so-msg'; m.textContent = 'No in-person results for these events yet.'; el.append(m); return; }
+  const readyAt = thr(1), closeAt = thr(3);
+  const W = Math.max(260, el.clientWidth), rowH = 24, m = {t: 24, r: 44, b: 8, l: 10};
+  const meas = d3.select(el).append('svg').attr('width', 0).attr('height', 0).style('position', 'absolute');
+  let lw = 0; rows.forEach((r) => { const t = meas.append('text').style('font-size', '12px').text(r['Event']); lw = Math.max(lw, t.node().getComputedTextLength()); });
+  meas.remove();
+  m.l = Math.min(lw + 14, W * 0.45);
+  const H = m.t + rows.length * rowH + m.b;
+  const maxX = Math.max(12, d3.max(rows, (r) => r['Avg in-person place']) + 1);
+  const x = d3.scaleLinear().domain([1, maxX]).range([m.l, W - m.r]);
+  const y = d3.scaleBand().domain(rows.map((r) => r['Event'])).range([m.t, H - m.b]).padding(0.3);
+  const svg = d3.select(el).append('svg').attr('width', W).attr('height', H).attr('role', 'img').attr('aria-label', 'Best team average in-person place by event; lower is better');
+  svg.append('g').attr('class', 'so-axis').attr('transform', `translate(0,${m.t})`).call(d3.axisTop(x).ticks(Math.max(3, Math.floor((W - m.l) / 60))).tickFormat(d3.format('d')).tickSize(-(H - m.t - m.b))).call((g) => { g.select('.domain').remove(); g.selectAll('line').style('stroke', 'var(--cds-chart-grid)'); });
+  [[readyAt, 'var(--color-ok)'], [closeAt, 'var(--color-warn)']].forEach(([v, c]) => { if (typeof v === 'number' && v <= maxX) svg.append('line').attr('x1', x(v)).attr('x2', x(v)).attr('y1', m.t).attr('y2', H - m.b).style('stroke', c).style('stroke-dasharray', '4 3').style('stroke-width', 1.5); });
+  const tip = U.tip(el);
+  const g = svg.selectAll('g.row').data(rows).join('g').attr('class', 'row').attr('transform', (r) => `translate(0,${y(r['Event']) + y.bandwidth() / 2})`).style('cursor', 'pointer')
+    .on('click', (ev, r) => U.select(r['Event']))
+    .on('mousemove', (ev, r) => tip.show(ev, `${r['Event']}: avg ${r['Avg in-person place'].toFixed(1)} · ${U.pct(r['In-person medal rate'])} medal rate · ${r['Readiness']}`)).on('mouseleave', tip.hide);
+  g.append('text').attr('x', m.l - 8).attr('dy', '0.35em').attr('text-anchor', 'end').style('font-size', '12px').style('fill', (r) => (r['Event'] === window.SO.sel ? 'var(--color-fg)' : 'var(--cds-text-secondary)')).style('font-weight', (r) => (r['Event'] === window.SO.sel ? 600 : 400)).text((r) => r['Event']);
+  g.append('line').attr('x1', x(1)).attr('x2', (r) => x(r['Avg in-person place'])).style('stroke', (r) => U.rColor(r['Readiness'])).style('stroke-width', 2).style('opacity', 0.55);
+  g.append('circle').attr('class', 'so-dot').attr('cx', (r) => x(r['Avg in-person place'])).attr('r', 6).style('fill', (r) => U.rColor(r['Readiness']));
+  g.append('text').attr('x', (r) => x(r['Avg in-person place']) + 10).attr('dy', '0.35em').style('font-size', '11px').style('fill', 'var(--color-fg)').style('font-variant-numeric', 'tabular-nums').text((r) => r['Avg in-person place'].toFixed(1));
+});
+
+dash.draw('heat', (el) => {
+  const U = window.SOU; const rows = U.catRows();
+  const h = dash.data('heat'), inv = dash.data('invitationals');
+  el.replaceChildren();
+  if (!rows || h.status !== 'ok' || inv.status !== 'ok') { const p = document.createElement('p'); p.className = 'so-hint'; p.textContent = (h.status === 'error' || inv.status === 'error') ? 'Could not load results.' : '—'; el.append(p); return; }
+  const invs = inv.data.filter((i) => i['Invitational']);
+  const map = new Map(h.data.map((c) => [c['Event'] + '\u0000' + c['Invitational'], c]));
+  const t = document.createElement('table'); t.className = 'so-heat';
+  const hr = t.createTHead().insertRow();
+  const th0 = document.createElement('th'); th0.className = 'ev'; th0.textContent = 'Event'; hr.append(th0);
+  invs.forEach((i) => { const th = document.createElement('th'); th.textContent = String(i['Invitational']).replace(' Invitational', ''); const s = document.createElement('small'); s.textContent = `${i['Format']} · top ${i['Medal cutoff (top N)']}`; th.append(s); hr.append(th); });
+  const tb = t.createTBody();
+  rows.forEach((r) => {
+    const tr = tb.insertRow(); tr.style.cursor = 'pointer'; tr.addEventListener('click', () => U.select(r['Event']));
+    const c0 = tr.insertCell(); c0.className = 'ev'; c0.textContent = r['Event'];
+    invs.forEach((i) => {
+      const td = tr.insertCell(); const c = map.get(r['Event'] + '\u0000' + i['Invitational']);
+      if (!c) { td.className = 'h-none'; td.textContent = '·'; return; }
+      td.setAttribute('data-source', 'heat'); td.setAttribute('data-field', 'Best');
+      td.setAttribute('data-where', 'Event=' + U.enc(r['Event']) + '&Invitational=' + U.enc(i['Invitational']));
+      if (c['Best'] == null) { td.className = 'h-p'; td.textContent = c['Status'] === 'No-show' ? 'NS' : 'P'; return; }
+      td.className = c['Medal'] === 'Yes' ? (c['Best'] === 1 ? 'h-gold' : 'h-medal') : 'h-rank';
+      td.textContent = String(c['Best']);
+    });
+  });
+  el.append(t);
+});
+
+dash.draw('evtBody', (tb) => {
+  const U = window.SOU; const rows = U.catRows();
+  tb.replaceChildren();
+  if (!rows) { const tr = tb.insertRow(); const td = tr.insertCell(); td.colSpan = 9; td.textContent = dash.data('summary').status === 'error' ? 'Could not load events.' : '—'; return; }
+  rows.forEach((r) => {
+    const tr = tb.insertRow(); tr.className = 'so-click' + (r['Event'] === window.SO.sel ? ' is-sel' : '');
+    tr.addEventListener('click', () => U.select(r['Event']));
+    tr.insertCell().textContent = r['Event'];
+    const ct = tr.insertCell(); const s = document.createElement('span'); s.className = 'so-type'; const i = document.createElement('i'); i.style.background = U.typeColor(r['Category']); s.append(i, document.createTextNode(r['Category'])); ct.append(s);
+    const cr = tr.insertCell(); const p = document.createElement('span'); p.className = 'so-pill ' + U.rClass(r['Readiness']); p.textContent = r['Readiness'] + (r['Set by'] === 'Captain' ? ' (captain)' : ''); cr.append(p);
+    [['Avg in-person place', (v) => U.num(v)], ['In-person medal rate', U.pct], ['Satellite medal rate', U.pct], ['Invitationals medaled', (v) => v || '–']].forEach(([f, fmt]) => { const td = tr.insertCell(); td.className = 'n'; td.textContent = fmt(r[f]); });
+    tr.insertCell().textContent = r['Satellite vs in-person'] || '–';
+  });
+});
+
+function selRow() {
+  const d = dash.data('summary');
+  if (d.status !== 'ok' || !window.SO.sel) return null;
+  return d.data.find((r) => r['Event'] === window.SO.sel) || null;
+}
+dash.draw('detailName', (el) => { const r = selRow(); el.textContent = r ? r['Event'] : 'Event detail'; });
+dash.draw('detailHint', () => { const on = !!selRow(); document.querySelectorAll('.so-pick').forEach((p) => { p.hidden = on; }); });
+dash.draw('detailPills', (el) => {
+  const r = selRow(); const U = window.SOU; el.replaceChildren();
+  if (!r) return;
+  const t = document.createElement('span'); t.className = 'so-type'; const i = document.createElement('i'); i.style.background = U.typeColor(r['Category']); t.append(i, document.createTextNode(r['Category'] + (r['National'] === 'Yes' ? ' · national event' : ' · local or trial event')));
+  const p = document.createElement('span'); p.className = 'so-pill ' + U.rClass(r['Readiness']); p.textContent = r['Readiness'];
+  el.append(p, document.createTextNode(' '), t);
+});
+dash.draw('detailStats', (el) => {
+  const r = selRow(); const U = window.SOU; el.replaceChildren();
+  if (!r) return;
+  [['Best place', 'Best place', (v) => (v == null ? '–' : String(v))], ['Avg in-person place', 'Avg in-person place', (v) => U.num(v)], ['Avg satellite place', 'Avg satellite place', (v) => U.num(v)], ['In-person medal rate', 'In-person medal rate', U.pct], ['Invitationals medaled', 'Invitationals medaled', (v) => v || '–']].forEach(([label, f, fmt]) => {
+    const d = document.createElement('div'); d.className = 'so-stat';
+    const s = document.createElement('span'); s.textContent = label;
+    const b = document.createElement('b'); b.textContent = fmt(r[f]);
+    b.setAttribute('data-source', 'summary'); b.setAttribute('data-field', f); b.setAttribute('data-where', 'Event=' + U.enc(r['Event']));
+    d.append(s, b); el.append(d);
+  });
+});
+dash.draw('detailRows', (tb) => {
+  const U = window.SOU; tb.replaceChildren();
+  const sel = window.SO.sel; if (!sel) return;
+  const d = dash.data('results');
+  if (d.status !== 'ok') { const tr = tb.insertRow(); const td = tr.insertCell(); td.colSpan = 8; td.textContent = d.status === 'error' ? 'Could not load results.' : '—'; return; }
+  const rows = d.data.filter((r) => r['Event'] === sel).sort((a, b) => String(a['Date']).localeCompare(String(b['Date'])) || (a['Placement'] ?? 999) - (b['Placement'] ?? 999));
+  rows.forEach((r) => {
+    const tr = tb.insertRow();
+    tr.setAttribute('data-key', [r['Invitational'], r['Team name'], r['Event']].map(U.enc).join(','));
+    tr.insertCell().textContent = r['Date'] || '';
+    tr.insertCell().textContent = r['Invitational'] || '';
+    tr.insertCell().textContent = r['Format'] || '';
+    tr.insertCell().textContent = r['Team name'] || '';
+    const p = tr.insertCell(); p.className = 'n'; p.textContent = r['Placement'] == null ? '–' : String(r['Placement']);
+    const n = tr.insertCell(); n.className = 'n'; n.textContent = r['Teams in event'] == null ? '–' : String(r['Teams in event']);
+    const md = tr.insertCell(); if (r['Medaled?'] === 'Yes') { const pl = document.createElement('span'); pl.className = 'so-pill r-Ready'; pl.textContent = 'Medal'; md.append(pl); } else md.textContent = r['Medaled?'] === 'No' ? 'No' : '–';
+    tr.insertCell().textContent = r['Penalty / issue'] || '';
+  });
+});
+
+dash.draw('sumDot', (el) => { el.style.background = window.SOU.typeColor(el.dataset.cat); });
+dash.draw('sumCount', (el) => {
+  const U = window.SOU; el.replaceChildren();
+  const d = dash.data('catCounts');
+  if (d.status !== 'ok' || !Array.isArray(d.data)) { el.textContent = '—'; return; }
+  const scope = window.SO.national ? 'National' : 'All';
+  const get = (lvl) => d.data.find((x) => x.scope === scope && x.Category === el.dataset.cat && x.readiness === lvl);
+  const mk = (lvl, suffix) => { const r = get(lvl); const s = document.createElement('span'); s.setAttribute('data-source', 'catCounts'); s.setAttribute('data-field', 'events'); s.setAttribute('data-where', 'scope=' + scope + '&Category=' + el.dataset.cat + '&readiness=' + lvl); s.textContent = r ? String(r.events) : '0'; return [s, document.createTextNode(suffix)]; };
+  el.append(...mk('Total', ' events: '), ...mk('Ready', ' ready, '), ...mk('Close', ' close, '), ...mk('Not yet', ' not yet'));
+});
+dash.draw('catSummary', (el) => {
+  const U = window.SOU; el.replaceChildren();
+  const all = U.events();
+  if (!all) { const p = document.createElement('p'); p.className = 'so-hint'; p.textContent = dash.data('summary').status === 'error' ? 'Could not load the summary tab.' : '—'; el.append(p); return; }
+  const rows = U.sorted(all.filter((r) => r['Category'] === el.dataset.cat));
+  if (!rows.length) { const p = document.createElement('p'); p.className = 'so-hint'; p.textContent = 'No events.'; el.append(p); return; }
+  const ipd = dash.data('ipMedals');
+  const ipList = ipd.status === 'ok' && Array.isArray(ipd.data) ? ipd.data : [];
+  const mark = (node, src, field, ev) => { node.setAttribute('data-source', src); node.setAttribute('data-field', field); node.setAttribute('data-where', 'Event=' + U.enc(ev)); return node; };
+  rows.forEach((r) => {
+    const it = document.createElement('div'); it.className = 'so-sumitem';
+    it.addEventListener('click', () => U.select(r['Event']));
+    const top = document.createElement('div'); top.className = 'so-sumtop';
+    const nm = document.createElement('span'); nm.className = 'so-sumname'; nm.textContent = r['Event'];
+    const pill = document.createElement('span'); pill.className = 'so-pill ' + U.rClass(r['Readiness']); pill.textContent = r['Readiness'] + (r['Set by'] === 'Captain' ? ' (captain)' : '');
+    top.append(nm, pill);
+    const meta = document.createElement('div'); meta.className = 'so-summeta';
+    const bits = [];
+    if (typeof r['Avg in-person place'] === 'number') { const a = mark(document.createElement('span'), 'summary', 'Avg in-person place', r['Event']); a.textContent = r['Avg in-person place'].toFixed(1); bits.push([document.createTextNode('Avg in-person place '), a]); }
+    const ipr = ipList.find((x) => x['Event'] === r['Event']);
+    if (ipr) { const m = mark(document.createElement('span'), 'ipMedals', 'In-person medaled', r['Event']); m.textContent = ipr['In-person medaled']; bits.push([m, document.createTextNode(' in person')]); }
+    if (r['Invitationals medaled']) { const o = mark(document.createElement('span'), 'summary', 'Invitationals medaled', r['Event']); o.textContent = r['Invitationals medaled']; bits.push([o, document.createTextNode(' overall')]); }
+    bits.forEach((b, i) => { if (i) meta.append(document.createTextNode(' · ')); meta.append(...b); });
+    const ppl = document.createElement('div'); ppl.className = 'so-sumppl';
+    const named = [['Competitor 1', r['Competitor 1']], ['Competitor 2', r['Competitor 2']], ['Competitor 3', r['Competitor 3']]].filter((x) => x[1]);
+    if (named.length) {
+      ppl.append(document.createTextNode('Best competitors: '));
+      named.forEach(([f, v], i) => { if (i) ppl.append(document.createTextNode(i === named.length - 1 ? ' & ' : ', ')); const s = mark(document.createElement('b'), 'summary', f, r['Event']); s.textContent = v; ppl.append(s); });
+      if (r['Backup']) { ppl.append(document.createTextNode(' (backup: ')); const s = mark(document.createElement('span'), 'summary', 'Backup', r['Event']); s.textContent = r['Backup']; ppl.append(s, document.createTextNode(')')); }
+    } else { ppl.classList.add('is-empty'); ppl.textContent = 'Best competitors not set yet'; }
+    it.append(top, meta, ppl);
+    if (r['Next steps']) { const nx = document.createElement('div'); nx.className = 'so-sumnext'; nx.append(document.createTextNode('Next: ')); const s = mark(document.createElement('span'), 'summary', 'Next steps', r['Event']); s.textContent = r['Next steps']; nx.append(s); if (r['Owner']) nx.append(document.createTextNode(' (' + r['Owner'] + ')')); it.append(nx); }
+    el.append(it);
+  });
+});
+
+dash.draw('satList', (el) => {
+  const U = window.SOU; const rows = U.events(); el.replaceChildren();
+  if (!rows) { const li = document.createElement('li'); li.textContent = dash.data('summary').status === 'error' ? 'Could not load events.' : '—'; el.append(li); return; }
+  const list = rows.filter((r) => r['Satellite vs in-person'] === el.dataset.k).sort((a, b) => a['Event'].localeCompare(b['Event']));
+  if (!list.length) { const li = document.createElement('li'); li.textContent = 'None'; el.append(li); return; }
+  list.forEach((r) => {
+    const li = document.createElement('li'); li.style.cursor = 'pointer'; li.addEventListener('click', () => U.select(r['Event']));
+    const n = document.createElement('span'); n.textContent = r['Event'];
+    const s = document.createElement('small'); s.textContent = `in person ${U.pct(r['In-person medal rate'])} · satellite ${U.pct(r['Satellite medal rate'])}`;
+    li.append(n, s); el.append(li);
+  });
+});
+
+</script>
+<script>
+(function () {
+  const gate = document.getElementById('gate');
+  const app = document.getElementById('app');
+  const form = document.getElementById('loginForm');
+  const err = document.getElementById('loginError');
+  const stamp = document.getElementById('loadedAt');
+  const banner = document.getElementById('dataBanner');
+  const KEY = 'bhsso-session';
+
+  function csvUrl(gid) {
+    const base = String(CONFIG.PUBLISHED_URL).replace(/\/pub(html)?(\?.*)?$/, '/pub');
+    return base + '?gid=' + gid + '&single=true&output=csv&t=' + Date.now();
+  }
+  async function fetchGrid(gid) {
+    let res;
+    try { res = await fetch(csvUrl(gid), {cache: 'no-store'}); }
+    catch (e) { const err = new Error('network'); err.network = true; throw err; }
+    if (!res.ok) throw new Error('The published sheet answered ' + res.status + ' for tab ' + gid + '.');
+    const text = await res.text();
+    if (/^\s*</.test(text)) throw new Error('Tab ' + gid + ' is not published as CSV. Check the Publish to web settings.');
+    return parseCSV(text);
+  }
+  async function load() {
+    banner.hidden = true;
+    if (!/^https:\/\/docs\.google\.com\/spreadsheets\/d\/e\//.test(String(CONFIG.PUBLISHED_URL))) {
+      dash._set('error', null, 'setup');
+      banner.textContent = 'Setup needed: paste your Publish to web link into CONFIG.PUBLISHED_URL in index.html (see README).';
+      banner.hidden = false; return;
+    }
+    dash._set('loading', null);
+    try {
+      const T = CONFIG.TABS;
+      let grids, live = true;
+      try { grids = await Promise.all([T.results, T.events, T.categories, T.lists, T.build, T.lab, T.study].map(fetchGrid)); }
+      catch (e) {
+        console.warn('Live data failed, using snapshot', e);
+        live = false;
+        grids = [T.results, T.events, T.categories, T.lists, T.build, T.lab, T.study].map((g) => SNAPSHOT[String(g)]);
+        banner.textContent = (e.network ? 'Could not reach Google Sheets from here' : e.message) + ', so this shows the saved snapshot from ' + SNAPSHOT_DATE + '. On GitHub Pages it loads live data.';
+      }
+      const [results, events, categories, lists, build, lab, study] = grids;
+      const data = {
+        results: tableFrom(results, 'Date'),
+        events: tableFrom(events, 'Event'),
+        categories: tableFrom(categories, 'Category'),
+        build: tableFrom(build, 'Build event'),
+        lab: tableFrom(lab, 'Lab event'),
+        study: tableFrom(study, 'Study event'),
+        invitationals: tableFrom(lists, 'Invitational', 5, 11),
+        thresholds: tableFrom(lists, 'Readiness setting (best team, in-person)', 27, 29)
+      };
+      dash._set('ok', data);
+      stamp.textContent = live ? 'Live · updated ' + new Date().toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'}) : 'Snapshot · ' + SNAPSHOT_DATE;
+      if (!live) banner.hidden = false;
+    } catch (e) {
+      console.error(e);
+      dash._set('error', null, e.message);
+      banner.textContent = 'Could not load the tracker: ' + e.message;
+      banner.hidden = false;
+    }
+  }
+  function enter() { gate.hidden = true; app.hidden = false; if (!window.d3) { banner.textContent = 'The chart library could not load. Open this page from GitHub Pages or a normal browser tab.'; banner.hidden = false; } load(); }
+
+  function tryLogin(ev) {
+    if (ev) ev.preventDefault();
+    const u = form.querySelector('[name=user]').value.trim().toLowerCase();
+    const p = form.querySelector('[name=pass]').value;
+    let h = '';
+    try { h = sha256Hex(u + ':' + p); } catch (e) { console.error(e); }
+    if (h === CONFIG.LOGIN_HASH) { try { sessionStorage.setItem(KEY, h); } catch (e) {} err.hidden = true; form.querySelector('[name=pass]').value = ''; enter(); }
+    else { err.hidden = false; form.querySelector('[name=pass]').value = ''; form.querySelector('[name=pass]').focus(); }
+  }
+  document.getElementById('signInBtn').addEventListener('click', tryLogin);
+  form.addEventListener('submit', tryLogin);
+  form.querySelectorAll('input').forEach((i) => i.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') tryLogin(ev); }));
+  document.getElementById('refreshBtn').addEventListener('click', load);
+  document.getElementById('logoutBtn').addEventListener('click', () => { try { sessionStorage.removeItem(KEY); } catch (e) {} app.hidden = true; gate.hidden = false; dash._set('loading', {}); });
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => dash._redrawAll(), 150); });
+
+  let ok = false; try { ok = sessionStorage.getItem(KEY) === CONFIG.LOGIN_HASH; } catch (e) {}
+  if (ok) enter(); else { gate.hidden = false; app.hidden = true; }
+})();
+
+</script>
+</body>
+</html>
